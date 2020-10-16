@@ -1,4 +1,5 @@
 from .screen_library import *
+from .util import *
 import pandas as pd
 import numpy as np
 from sklearn import decomposition
@@ -11,7 +12,7 @@ import matplotlib.pyplot as plt
 
 class analyze_lig_set():
     
-    def __init__(self, lig_set = None):
+    def __init__(self, lig_set = None, full_init = False):
         
         self.lig_set = lig_set
         
@@ -38,10 +39,62 @@ class analyze_lig_set():
         self.fsimilarity_matrix = None
         self.frag_space2 = None
         
-        
+        self.lig_graph = None
+        self.frag_graph = None
         
         #will likeley be replaced by neighbourhood and cluster searching
         self.lig_grouped = None
+        
+        self.frag_grouped = None
+        
+        if full_init:
+            self.full_init()
+        
+        #need to add debug
+    def full_init(self):
+            
+        try:   
+            #1
+            self.compute_similarity_matrix()
+            
+            #2
+            self.lig_space2 = self.pca_similarity_matrix(self.similarity_matrix)
+            
+            #3
+            self.k_means_analysis(self.lig_space2)
+            
+            #4
+            self.sort_cores(self.find_cores(c = 2/3))
+            
+            #5
+            self.compute_fsimilarity_matrix()
+            
+            #6
+            self.frag_space2 = self.pca_similarity_matrix(self.fsimilarity_matrix)
+            
+            #7
+            self.k_means_analysis(self.frag_space2)
+            
+            #8
+            self.lig_graph = self.create_ligand_graph(self.lig_set, self.frag_set)
+            self.frag_graph = self.create_scaffold_graph(self.lig_set, self.frag_set)
+        
+        except:  
+            raise LigSetAnalysisError()
+
+        '''
+        Now you can set a number of things to be pre-computed (decided by full_init):
+        1. The ligand similarity matrix
+        2. The 2-D reduced similarity matrix
+        3. The k-means grouping
+        4. The unique scaffolds (fragments)
+        5. The the fsimilarity matrix
+        6. The 2-D reduced fsimilarity matrix
+        7. The k-means grouping
+        8. The ligand space and fragments space graphs
+        '''
+
+
         
     
     
@@ -228,7 +281,7 @@ class analyze_lig_set():
         #correspondence between unique ligid and ambiguous coreids
         sorted_ligs = list(unique_ligs.groups.values())
 
-        f = [ligand(smiles = smi, non_empty_init = True) for smi in list(unique_cores.groups)]
+        f = [ligand(smiles = smi) for smi in list(unique_cores.groups)]
         
         frag_set = pd.DataFrame({'fragment' : f, 'ligs' : None})
         
@@ -264,31 +317,31 @@ class analyze_lig_set():
 ## should be move outside the class object and an initiation set of functions to precompute certain values
 ## needs to be established. After this, neighbourhood visualization can be addressed
         
-def create_ligand_graph(lig_set, frag_set):
+    def create_ligand_graph(self, lig_set, frag_set):
     
-    lig_graph = networkx.Graph()
+        lig_graph = networkx.Graph()
     
-    lig_graph.add_nodes_from(lig_set['ligid'])
-    
-    for lig_group in frag_set['ligs']:
+        lig_graph.add_nodes_from(lig_set['ligid'])
         
-            k = networkx.complete_graph(lig_group)
+        for lig_group in frag_set['ligs']:
         
-            lig_graph.add_edges_from(k.edges)
+                k = networkx.complete_graph(lig_group)
         
-    return lig_graph
+                lig_graph.add_edges_from(k.edges)
+        
+        return lig_graph
 
 
-def create_scaffold_graph(lig_set, frag_set):
+    def create_scaffold_graph(self, lig_set, frag_set):
     
-    frag_graph = networkx.Graph()
+        frag_graph = networkx.Graph()
     
-    frag_graph.add_nodes_from(frag_set['fragid'])
+        frag_graph.add_nodes_from(frag_set['fragid'])
     
-    for frag_group in lig_set['frags']:
+        for frag_group in lig_set['frags']:
         
-        k = networkx.complete_graph(frag_group)
+            k = networkx.complete_graph(frag_group)
         
-        frag_graph.add_edges_from(k.edges)   
+            frag_graph.add_edges_from(k.edges)   
     
-    return frag_graph
+        return frag_graph

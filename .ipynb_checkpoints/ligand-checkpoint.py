@@ -13,12 +13,10 @@ from rdkit.Chem import Crippen #J. Chem. Inf. Comput. Sci. 1999, 39, 868-873
 
 class ligand():
     
-    def __init__(self, name = None, smiles = None, mol = None, non_empty_init = False):
+    def __init__(self, name = None, smiles = None, mol = None):
         
         #basic ligand data
-        
         self.name = name
-        
         self.smiles = smiles
         self.mol = mol
         
@@ -34,7 +32,7 @@ class ligand():
         
         self.flag = False
         
-        if non_empty_init:
+        if self.mol is not None:
         
             self.cheminformatic_analysis()
         
@@ -52,11 +50,7 @@ class ligand():
         self.logp = Crippen.MolLogP(self.mol)
         self.mr = Crippen.MolMR(self.mol)
         self.ecfp = AllChem.GetMorganFingerprintAsBitVect(self.mol,2) #obviously these needs to be improved
-       
-    
-    #Load chemiinformatic information if molecule is already prepared
-    
-    
+
     
     ## Ligand Preparation ##
         
@@ -73,14 +67,11 @@ class ligand():
     
         #Generate 3D Coordinates
         #AllChem.EmbedMolecule(self.mol, randomSeed = 0xf00d) #random seed???
-    
-        # Refresh Cheminformatic Data
-        self.cheminformatic_analysis()
         
         #Minimize coordinates
         #AllChem.MMFFOptimizeMolecule(self.mol)
 
-  
+        ### NOTE if you want any precomputed 3D dependent coordinates this would be the place to compute them
         
         
         
@@ -112,8 +103,3 @@ class ligand():
         #flattening to 2D was problematic?
     
         maps.GetSimilarityMapFromWeights(mol, full_charge_gasteiger)
-
-
-
-
-

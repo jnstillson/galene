@@ -68,10 +68,7 @@ class screen_library():
         for line in lines:
             tabs = line.split()
         
-            lig = ligand()
-        
-            lig.smiles = str(tabs[0])
-            lig.name = str(tabs[1])
+            lig = ligand(smiles = str(tabs[0]), name = str(tabs[0]))
             
             ## structure prep
             try:
