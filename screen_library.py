@@ -2,30 +2,30 @@ from .dock import *
 from .receptor import *
 import time
 
-class screen_library():
+class ScreenLibrary():
     
     
-    def __init__(self, name = 'library_screen'):
+    def __init__(self,lig_set, name = 'Test'):
+        
+         #screen info
+        self.name = name
+        self.lib_path = str('./' + self.name + '/')
         
         #library to be screened
         self.dock_set = []
         self.rec_set = []
-        self.lig_set = []
-        
-        #screen info
-        self.name = name
-        self.lib_path = str('./' + self.name + '/')
+        self.lig_set = lig_set
+        self.conf_set = []
+        for i in range(len(lig_set)):
+            self.conf_set += ([(conf , lig_set.loc[i, 'ligid']) for conf in lig_set.loc[i , 'ligand'].conformer_set])
         
         #files for input data
-        self.rec_file = 'receptor file'
-        self.lig_file = 'ligand file'
-        
+        self.rec_file = None       
    
 
     ##  ###  ## Determination of library contents ##  ###  ##
     
-    
-    
+       
     #import receptor file funtion (called by collect_file())        
     def import_rec_file(self):
     
@@ -35,7 +35,7 @@ class screen_library():
         for line in lines:
 
             tabs = line.split()
-            rec = receptor()
+            rec = Receptor()
         
             rec.name = str(tabs[0])
             rec.pos[0] = float(tabs[1])
@@ -53,74 +53,38 @@ class screen_library():
             self.rec_set.append(rec)
         
         rec_file.close()
-    
-    
-    ## Formatted to read .smi files 'smiles \t name' ##
-    
-    #import ligand file function (called by collect_file())
-    def import_lig_file(self):
-        
-        problematic_ligands = 0
-
-        lig_file = open(self.lig_file,'r')
-        lines = lig_file.readlines()
-    
-        for line in lines:
-            tabs = line.split()
-        
-            lig = ligand(smiles = str(tabs[0]), name = str(tabs[0]))
-            
-            ## structure prep
-            try:
-                
-                lig.prep_struct()
-            
-            except:
-                
-                lig.flag_issue()
-                problematic_ligands += 1
-        
-            self.lig_set.append(lig)
-            
-        lig_file.close()
-        
-        print('\nNumber of ligands in set: ' + str(len(self.lig_set))+ '\n')
-        
-        print('\nNumber of prep errors: ' + str(problematic_ligands) + '\n')
         
     def create_dock_set(self):
+                
+            for rec in self.rec_set:
+                
+                c = 0
+                for conf in self.conf_set:
+                    
+                    conf_id = str('l' + str(conf[1]) + 'c' + str(c))
+                    
+                    doc = Dock(rec, conf, conf_id)
 
-        for rec in self.rec_set:
-            for lig in self.lig_set:
-                
-                doc = dock()
-                
-                doc.rec = rec
-                doc.lig = lig
-                
-                doc.name = str(rec.name+'_'+lig.name)
-                doc.file = str(self.name + '/' + doc.name + '.pdbqt')
-            
-                self.dock_set.append(doc)
-    
+                    self.dock_set.append(doc)
+                    c += 1 
     
     
     ##  ###  ## Creation of library ##  ###  ##
     
     
-    
     def prepare_library_directory_tree(self):
         
         try:
-            #linux command
+            #linux command (I dont think so anymore)
             try:
         
                 sb.run('mkdir ' + self.name, shell = True)
             
                 sb.run('mkdir ' + self.lib_path + 'pdb', shell = True)
                 sb.run('mkdir ' + self.lib_path + 'pdbqt', shell = True)
-                sb.run('mkdir ' + self.lib_path + 'results', shell = True)
-            
+                sb.run('mkdir ' + self.lib_path + 'res_pdbqt', shell = True)
+                sb.run('mkdir ' + self.lib_path + 'res_sdf', shell = True)
+                
                 prep_pass = True
         
             #mac command??
@@ -130,7 +94,8 @@ class screen_library():
             
                 sb.run('mkdir ' + self.lib_path + 'pdb', shell = True, stdout = sb.PIPE , text=True , check = True)
                 sb.run('mkdir ' + self.lib_path + 'pdbqt', shell = True, stdout = sb.PIPE , text=True , check = True)
-                sb.run('mkdir ' + self.lib_path + 'results', shell = True, stdout = sb.PIPE , text=True , check = True)
+                sb.run('mkdir ' + self.lib_path + 'res_pdbqt', shell = True, stdout = sb.PIPE , text=True , check = True)
+                sb.run('mkdir ' + self.lib_path + 'res_sdf', shell = True, stdout = sb.PIPE , text=True , check = True)
             
                 prep_pass = True
             
@@ -142,20 +107,22 @@ class screen_library():
         
             
     def create_pdb_library(self):
-        
-        for dock in self.dock_set:
+        i = 0
+        for conf in self.conf_set:
     
-            dock.lig.file_writer(str(self.lib_path + 'pdb/'))
+            AllChem.MolToPDBFile(conf[0], str(self.lib_path + 'pdb/l' + str(conf[1]) + 'c' + str(i) + '.pdb'))
+            i += 1
         
-            
+    
     def create_pdbqt_library(self):
         
         problematic_ligands = 0
         
-        for dock in self.dock_set:
+        i = 0
+        for conf in self.conf_set:
             
-            pdb_file = str(self.lib_path + 'pdb/' + dock.lig.name + '.pdb')
-            pdbqt_file = str(self.lib_path + 'pdbqt/' + dock.lig.name + '.pdbqt')
+            pdb_file = str(self.lib_path + 'pdb/l' + str(conf[1]) + 'c' + str(i) + '.pdb')
+            pdbqt_file = str(self.lib_path + 'pdbqt/l' + str(conf[1]) + 'c' + str(i) + '.pdbqt')
                 
             command = str('obabel ' + pdb_file + ' -O' + pdbqt_file + ' --partialcharge gasteiger')
             
@@ -176,7 +143,9 @@ class screen_library():
                 dock.lig.flag_issue()
                 problematic_ligands += 1
                 
-                
+            
+            i += 1
+            
         print('\nNumber of conversion errors: ' + str(problematic_ligands) + '\n')
             
     
@@ -185,22 +154,15 @@ class screen_library():
     
     
     
-    def screen_library(self):
+    def screen_library(self, ex = 8):
         
         problematic_ligands = 0
             
         for dock in self.dock_set:
             
-            vina_file = str(self.lib_path + 'results/'+ dock.name + '.pdbqt')
-            lig_file = str(self.lib_path + 'pdbqt/' + dock.lig.name + '.pdbqt')
-                
             try:
                 
-                dock.vina_dock(vina_file,
-                                lig_file,
-                                dock.rec.rig_file,
-                                dock.rec.flex_file)
-                    
+                dock.vina_dock(self.lib_path, ex)
                 
             except:
                 
@@ -214,8 +176,8 @@ class screen_library():
         
         for dock in self.dock_set:
             
-            in_file = str(self.lib_path + 'results/' + dock.name + '.pdbqt')
-            out_file = str(self.lib_path + 'results/' + dock.name + '.mol2')
+            in_file = str(self.lib_path + 'res_pdbqt/' + dock.name + '.pdbqt')
+            out_file = str(self.lib_path + 'res_sdf/' + dock.name + '.sdf')
             
             command = str('obabel ' + in_file + ' -O' + out_file)
             
@@ -235,15 +197,15 @@ class screen_library():
         
         for dock in self.dock_set:
             
-            file = str(self.lib_path + 'results/' + dock.name + '.mol2')
+            file = str(self.lib_path + 'res_sdf/' + dock.name + '.sdf')
             
-            mol = AllChem.MolFromMol2File(file)
+            mols = [mol for mol in AllChem.SDMolSupplier(file)]
             
-            if mol is None:
+            if mols is None:
                 
                 problematic_ligands += 1
             
-            dock.conformations.append(mol)
+            dock.conformations = mols
             
         print('\nNumber of empty results: ' + str(problematic_ligands) + '\n')
             

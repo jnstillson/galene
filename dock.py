@@ -9,15 +9,16 @@ import subprocess as sb
 import sys
 import os
 
-class dock():
+class Dock():
     
-    def __init__(self):
+    def __init__(self, rec, conf, conf_id):
         
         #parameters
-        self.rec = receptor()
-        self.lig = ligand()
+        self.rec = rec
+        self.conf = conf
+        self.conf_id = conf_id
         
-        self.name = str(self.rec.name[:4] + '_' + self.lig.name[:4])
+        self.name = str(rec.name[:4] + conf_id)
 
         #debug
         self.wall_time = 0.0
@@ -28,35 +29,38 @@ class dock():
         
     def extract_conformations(self):
         
+        # Maybe move conformer extraction here?
+        
         # read in conformations as rdkit molecules and match them to their computed affinities
         pass    
     
-    def vina_dock(self, 
-                  vina_file, # path for .pdbqt output file
-                  lig_file,  # path for .pdbqt ligand input file
-                  rec_file,  # path for .pdbqt (rigid) receptor input file
-                  flex_file, # path for .pdbqt flexible receptor input file
-                  exhaustivness = 1 # exhaustiveness parameter
-                 ): 
-    
+    def vina_dock(self,
+                  lib_path, #path where all files are stored
+                  ex): # exhaustiveness parameter
+        
+        vina_file = str(lib_path + 'res_pdbqt/'+ self.name + '.pdbqt')
+        conf_file = str(lib_path + 'pdbqt/' + self.conf_id + '.pdbqt')
+        
         time0 = time.time()
+        
     
         dock_command = str('vina --out '+ vina_file + 
-                   ' --receptor ' + rec_file +
-                   ' --ligand ' + lig_file + 
+                   ' --receptor ' + self.rec.rig_file +
+                   ' --ligand ' + conf_file + 
                    ' --center_x ' + str(self.rec.pos[0]) + 
                    ' --center_y ' + str(self.rec.pos[1]) + 
                    ' --center_z ' + str(self.rec.pos[2]) +
                    ' --size_x ' + str(self.rec.dim[0]) + 
                    ' --size_y ' + str(self.rec.dim[1]) +
                    ' --size_z ' + str(self.rec.dim[2]) +
-                   ' --exhaustiveness ' + str(exhaustivness))
+                   ' --exhaustiveness ' + str(ex))
                 
+        
         if self.rec.flex == True:
             
-            dock_command += str(' --flex ' + flex_file)
+            dock_command += str(' --flex ' + self.rec.flex_file)
     
-        print('\nReceptor: '+str(self.rec.name)+'\n\nLigand: '+str(self.lig.name)+'\n')
+        #print('\nDocking to receptor: '+str(self.rec.name)+'\n')
     
         try:
             
@@ -73,9 +77,4 @@ class dock():
         
         self.wall_time = time.time() - time0
         
-        print(str('this doc took ' + str(self.wall_time) + ' long.'))
-
-
-
-
-
+        #print(str('this doc took ' + str(self.wall_time) + ' long.'))

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-class receptor():
+class Receptor():
     
     def __init__(self):
         

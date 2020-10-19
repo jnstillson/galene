@@ -11,7 +11,7 @@ from rdkit.Chem import Crippen #J. Chem. Inf. Comput. Sci. 1999, 39, 868-873
 
 
 
-class ligand():
+class Ligand():
     
     def __init__(self, name = None, smiles = None, mol = None):
         
@@ -27,6 +27,7 @@ class ligand():
             self.smiles = AllChem.MolToSmiles(mol)
         
         self.frag_set = None
+        self.conformer_set = []
         
         #degub data
         
@@ -73,14 +74,8 @@ class ligand():
 
         ### NOTE if you want any precomputed 3D dependent coordinates this would be the place to compute them
         
-        
-        
-    #writes pdb file of current mol
-    
-    def file_writer(self, path = './'):
-    
-        AllChem.MolToPDBFile(self.mol, str(path + self.name + '.pdb'))
-    
+           
+
     
     ## Miscellaneous ##
     

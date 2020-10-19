@@ -10,7 +10,7 @@ from itertools import compress
 import networkx
 import matplotlib.pyplot as plt
 
-class analyze_lig_set():
+class AnalyzeLigSet():
     
     def __init__(self, lig_set = None, full_init = False):
         
@@ -281,7 +281,7 @@ class analyze_lig_set():
         #correspondence between unique ligid and ambiguous coreids
         sorted_ligs = list(unique_ligs.groups.values())
 
-        f = [ligand(smiles = smi) for smi in list(unique_cores.groups)]
+        f = [Ligand(smiles = smi) for smi in list(unique_cores.groups)]
         
         frag_set = pd.DataFrame({'fragment' : f, 'ligs' : None})
         

@@ -7,6 +7,8 @@ This file will be for tracking utility stuff, wall times, error handling etc
 class Error(Exception):
     pass
 
+#need screen_library debug
+
 
 #analyze_lig_set debug
 class LigSetAnalysisError(Error):
