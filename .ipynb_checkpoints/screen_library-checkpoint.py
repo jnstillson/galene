@@ -17,7 +17,10 @@ class ScreenLibrary():
         self.lig_set = lig_set
         self.conf_set = []
         for i in range(len(lig_set)):
-            self.conf_set += ([(conf , lig_set.loc[i, 'ligid']) for conf in lig_set.loc[i , 'ligand'].conformer_set])
+            self.conf_set += ([(conf, 
+                                lig_set.loc[i , 'ligand'].conformer_set.index(conf),    #index of the conformer
+                                lig_set.loc[i, 'ligid'],                                #index of the ligand
+                               ) for conf in lig_set.loc[i , 'ligand'].conformer_set])
         
         #files for input data
         self.rec_file = None       
@@ -26,7 +29,10 @@ class ScreenLibrary():
     ##  ###  ## Determination of library contents ##  ###  ##
     
        
-    #import receptor file funtion (called by collect_file())        
+    #import receptor file funtion (called by collect_file())   
+    
+    #no import of flex files
+    
     def import_rec_file(self):
     
         rec_file = open(self.rec_file,'r')
@@ -35,20 +41,11 @@ class ScreenLibrary():
         for line in lines:
 
             tabs = line.split()
-            rec = Receptor()
-        
-            rec.name = str(tabs[0])
-            rec.pos[0] = float(tabs[1])
-            rec.pos[1] = float(tabs[2])
-            rec.pos[2] = float(tabs[3])
-            rec.dim[0] = float(tabs[4])
-            rec.dim[1] = float(tabs[5])
-            rec.dim[2] = float(tabs[6])
-            rec.rig_file = str(tabs[7])
-            rec.flex_file = str(tabs[8])
-            
-            if str(tabs[8]) != 'null':
-                rec.flex = True
+            rec = Receptor(name = str(tabs[0]),
+                           rig_file = str(tabs[7]),
+                           pos = [tabs[1], tabs[2], tabs[3]],
+                           dim = [tabs[4], tabs[5], tabs[6]],
+                          )
             
             self.rec_set.append(rec)
         
@@ -61,9 +58,11 @@ class ScreenLibrary():
                 c = 0
                 for conf in self.conf_set:
                     
-                    conf_id = str('l' + str(conf[1]) + 'c' + str(c))
-                    
-                    doc = Dock(rec, conf, conf_id)
+                    doc = Dock(rec,
+                               conf,
+                               conf_id = conf[1],
+                               lig_id = self.lig_set.loc[conf[2], 'ligid'],
+                               )
 
                     self.dock_set.append(doc)
                     c += 1 
@@ -110,7 +109,7 @@ class ScreenLibrary():
         i = 0
         for conf in self.conf_set:
     
-            AllChem.MolToPDBFile(conf[0], str(self.lib_path + 'pdb/l' + str(conf[1]) + 'c' + str(i) + '.pdb'))
+            AllChem.MolToPDBFile(conf[0], str(self.lib_path + 'pdb/l' + str(conf[2]) + 'c' + str(conf[1]) + '.pdb'))
             i += 1
         
     
@@ -121,8 +120,8 @@ class ScreenLibrary():
         i = 0
         for conf in self.conf_set:
             
-            pdb_file = str(self.lib_path + 'pdb/l' + str(conf[1]) + 'c' + str(i) + '.pdb')
-            pdbqt_file = str(self.lib_path + 'pdbqt/l' + str(conf[1]) + 'c' + str(i) + '.pdbqt')
+            pdb_file = str(self.lib_path + 'pdb/l' + str(conf[2]) + 'c' + str(conf[1]) + '.pdb')
+            pdbqt_file = str(self.lib_path + 'pdbqt/l' + str(conf[2]) + 'c' + str(conf[1]) + '.pdbqt')
                 
             command = str('obabel ' + pdb_file + ' -O' + pdbqt_file + ' --partialcharge gasteiger')
             
@@ -160,9 +159,10 @@ class ScreenLibrary():
             
         for dock in self.dock_set:
             
+            dock.vina_dock(self.lib_path, ex)
             try:
                 
-                dock.vina_dock(self.lib_path, ex)
+                pass
                 
             except:
                 
@@ -206,6 +206,14 @@ class ScreenLibrary():
                 problematic_ligands += 1
             
             dock.conformations = mols
+            
+            #attatch results to ligand object
+            lig = self.lig_set.loc[dock.lig_id, 'ligand']
+            conf_id = dock.conf_id
+            for i in range(len(mols)):
+                score = mols[i].GetProp('REMARK').split()[2]
+                lig.vina_result_scores.loc[i, dock.conf_id] = score
+                lig.vina_result_matrix.loc[i, dock.conf_id] = mols[i] 
             
         print('\nNumber of empty results: ' + str(problematic_ligands) + '\n')
             

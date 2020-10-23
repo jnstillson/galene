@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
-
+import pandas as pd
 import rdkit
 
 from rdkit.Chem import AllChem
@@ -28,6 +28,9 @@ class Ligand():
         
         self.frag_set = None
         self.conformer_set = []
+        self.vina_result_poses = None
+        self.vina_result_scores = None
+        
         
         #degub data
         
@@ -36,6 +39,7 @@ class Ligand():
         if self.mol is not None:
         
             self.cheminformatic_analysis()
+            
         
     ## Debug ##
     
@@ -67,10 +71,10 @@ class Ligand():
         AllChem.AddHs(self.mol) #account for pKa!!
     
         #Generate 3D Coordinates
-        #AllChem.EmbedMolecule(self.mol, randomSeed = 0xf00d) #random seed???
+        AllChem.EmbedMolecule(self.mol, randomSeed = 0xf00d) #random seed???
         
         #Minimize coordinates
-        #AllChem.MMFFOptimizeMolecule(self.mol)
+        AllChem.MMFFOptimizeMolecule(self.mol)
 
         ### NOTE if you want any precomputed 3D dependent coordinates this would be the place to compute them
         

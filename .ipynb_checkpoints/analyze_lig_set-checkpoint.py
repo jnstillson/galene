@@ -345,3 +345,40 @@ class AnalyzeLigSet():
             frag_graph.add_edges_from(k.edges)   
     
         return frag_graph
+    
+    '''
+graph 1: in ligand space
+Nodes: unique ligands
+Edges: when two ligands share a scaffold
+
+Development: make edges when two ligands share a scaffold of similarity index s
+(where s = 1 is the original graph)
+
+graph 2: in scaffold space
+Nodes: unique scaffolds
+Edges: when two scaffolds share a ligand
+
+Development: make edges when two scaffolds share a ligand of similarity index s
+(again s = 1 is the original graph)
+
+
+Notice that for each set (no matter the size) of ligs or frags in the ligand_set and fragment_set 
+the connectivity of a given node is determined by selecting those nodes as a subgraph then making that
+the complete subgraph with n nodes.
+
+
+For the developemt ideas:
+1. Select a fragment
+2. Identify assocaited ligids
+3. Identify all memebers of the corresponding row of the frag or lig similiarity matrix with value >= s
+4. Create a complete subgraph of all these nodes
+
+'''
+
+'''
+
+for better frag space analysis:
+1. Eliminate fragments with only 1 ligand
+2. Eliminate fragments with the same associated ligands but smaller
+
+'''

@@ -1,28 +1,36 @@
 #!/usr/bin/env python
 # coding: utf-8
+from rdkit.Chem import AllChem
 
-# In[1]:
-
-
-class receptor():
+class Receptor():
     
-    def __init__(self):
+    def __init__(self,
+                 name,
+                 rig_file,
+                 mol2_file,
+                 pos,
+                 dim,
+                ):
         
-        self.pos = [0.0, 0.0, 0.0]
-        self.dim = [0.0, 0.0, 0.0]
+        self.name = name
         
-        self.prot_name = 'protein'
-        self.site_name = 'binding site'
+        self.rig_file = rig_file
         
+        self.mol = AllChem.MolFromMol2File(mol2_file, sanitize = False)
         
-        self.rig_file = 'rigid_file'
-        self.flex_file = 'flex_file'
+        self.pos = pos
+        self.dim = dim
         
-        self.flex = False
+        #in the event of receptor analysis:
+        '''
+        self.sites = pd.DataFrame({'name' : None,
+                                   'pdb' : None,
+                                   'pos' : None,
+                                   'dim' : None,
+                                   })
+                                   
+        '''
         
-
-
-# In[ ]:
 
 
 

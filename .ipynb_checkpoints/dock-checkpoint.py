@@ -11,14 +11,16 @@ import os
 
 class Dock():
     
-    def __init__(self, rec, conf, conf_id):
+    def __init__(self, rec, conf, lig_id, conf_id):
         
         #parameters
         self.rec = rec
         self.conf = conf
+        self.lig_id = lig_id
         self.conf_id = conf_id
         
-        self.name = str(rec.name[:4] + conf_id)
+        self.conf_tag = str('l' + str(lig_id) + 'c' + str(conf_id))
+        self.name = str(rec.name[:4] + self.conf_tag)
 
         #debug
         self.wall_time = 0.0
@@ -38,12 +40,12 @@ class Dock():
                   lib_path, #path where all files are stored
                   ex): # exhaustiveness parameter
         
-        vina_file = str(lib_path + 'res_pdbqt/'+ self.name + '.pdbqt')
-        conf_file = str(lib_path + 'pdbqt/' + self.conf_id + '.pdbqt')
         
+        vina_file = str(lib_path + 'res_pdbqt/'+ self.name + '.pdbqt')
+        conf_file = str(lib_path + 'pdbqt/' + self.conf_tag + '.pdbqt')
         time0 = time.time()
         
-    
+
         dock_command = str('vina --out '+ vina_file + 
                    ' --receptor ' + self.rec.rig_file +
                    ' --ligand ' + conf_file + 
@@ -54,12 +56,7 @@ class Dock():
                    ' --size_y ' + str(self.rec.dim[1]) +
                    ' --size_z ' + str(self.rec.dim[2]) +
                    ' --exhaustiveness ' + str(ex))
-                
-        
-        if self.rec.flex == True:
-            
-            dock_command += str(' --flex ' + self.rec.flex_file)
-    
+        print('i')       
         #print('\nDocking to receptor: '+str(self.rec.name)+'\n')
     
         try:
