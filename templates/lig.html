@@ -1,0 +1,67 @@
+{% extends "nav.html" %}
+
+{% block title %}
+Ligand
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+        <hdr>
+            Ligand Name
+        </hdr>
+        <p> {{lig.name|safe}} </p>
+        <hdr>
+            SMILES Code
+        </hdr>
+        <p> {{lig.smiles|safe}} </p>
+        <hdr>
+            Molar Mass
+        </hdr>
+        <p> {{lig.mmass|safe}} </p>
+        </div>
+        <div class="col">
+         <img src="/lig/img/{{ lig.name|safe}}.jpeg" >
+    </div>
+    </div>
+
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <table class="table">
+            <thead>
+                <tr>
+                    <hdr>
+                        Molecule Properties
+                    </hdr>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="col">Name</th>
+                <td>{{lig.name|safe}}</td>
+            </tr>
+            <tr>
+                <th scope="col">MMass</th>
+                <td>{{lig.mmass|safe}}</td>
+            </tr>
+            <tr>
+                <th scope="col">LogP</th>
+                <td>{{lig.logp|safe}}</td>
+            </tr>
+
+            </tbody>
+            </table>
+        </div>
+        <div class="col">
+            <hdr>
+                Docking Results (1 protein)
+            </hdr>
+            {{ lig.vina_result_scores[0]|safe }}
+
+        </div>
+    </div>
+</div>
+{% endblock %}

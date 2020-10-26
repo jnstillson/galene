@@ -1,0 +1,39 @@
+{% extends "nav.html" %}
+
+{% block title %}
+Receptor Set
+{% endblock %}
+
+{% block content %}
+<div class = "container">
+    <div class="row">
+        <div class="col-6">
+            <hdr class="customHeader">
+                Receptor Set
+            </hdr>
+            {{ rec_set.to_html(classes="table")|safe }}
+        </div>
+        <div class="col-4">
+            <hdr class="customHeader">
+                    Rec Set Properties
+            </hdr>
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th scope="col">Size</th>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <th scope="col">Something</th>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <th scope="col">Somrthing Else</th>
+                    <td>0</td>
+                </tr>
+                </tbody>
+           </table>
+    </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "nav.html" %}
+
+{% block title %}
+Ligand Set
+{% endblock %}
+
+{% block content %}
+<div class = "container">
+    <div class="row">
+        <div class="col-6">
+            <hdr class="customHeader">
+                Ligand Set
+            </hdr>
+            {{ lig_set.to_html(classes='table')|safe }}
+        </div>
+        <div class="col-4">
+            <hdr class="customHeader">
+                    Lig Set Properties
+            </hdr>
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th scope="col">Size</th>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <th scope="col">Av Mass</th>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <th scope="col">Av LogP</th>
+                    <td>0</td>
+                </tr>
+                </tbody>
+           </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,6 @@
+4u7t	19.73	62.75	-7.54	14.00	18.08	18.14	rec/4u7t.pdbqt	null
+6w8b	-4.82	44.70	-2.21	15.37	20.50	15.19	rec/6w8b.pdbqt	null
+4wxx	-46.69	61.34	6.56	14.67	20.11	15.96	rec/4wxx.pdbqt	null
+2hmy	2.09	-3.49	62.88	22.72	18.93	14.82	rec/2hmy.pdbqt	null
+6kda	16.21	-70.76	-10.67	18.35	15.26	17.59	rec/6kda.pdbqt	null
+6kdp	-21.22	21.97	-28.71	15.84	12.50	19.10	rec/6kdp.pdbqt	null

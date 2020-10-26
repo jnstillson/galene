@@ -1,26 +1,46 @@
-from screen_library import *
-        
 #### ## #### Testing #### ## ####
+if __name__ == '__main__':
+    try:
+        import rdkit.Chem
 
-## create and prep smaller screen
-test_small = screen_library('test_small')
+        pkg1 = 'Pass'
+    except:
+        pkg1 = 'Fail'
 
-test_small.rec_file = '/Users/jake/Desktop/paid/rec2.txt'
+    print('RDKit : ' + str(pkg1))
 
-test_small.lig_file = '/Users/jake/Desktop/paid/cofactors.smi'
+    try:
+        import flask
 
-test_small.import_rec_file()
+        pkg2 = 'Pass'
+    except:
+        pkg2 = 'Fail'
 
-test_small.import_lig_file()
+    print('Flask : ' + str(pkg2))
 
-test_small.create_dock_set()
+    try:
+        import pandas
 
-test_small.prepare_library_directory_tree()
+        pkg3 = 'Pass'
+    except:
+        pkg3 = 'Fail'
 
-test_small.create_pdb_library()
+    print('Pandas : ' + str(pkg3))
 
-test_small.create_pdbqt_library()
+    try:
+        import sklearn
 
-test_small.screen_library()
+        pkg4 = 'Pass'
+    except:
+        pkg4 = 'Fail'
 
-test_small.convert_results()
+    print('sklearn : ' + str(pkg1))
+
+    try:
+        import networkx
+
+        pkg5 = 'Pass'
+    except:
+        pkg5 = 'Fail'
+
+    print('Networkx : ' + str(pkg5))

@@ -1,5 +1,3 @@
-from screen_library import *
-        
 #### ## #### Testing #### ## ####
 
 ## create and prep smaller screen

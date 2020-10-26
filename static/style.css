@@ -1,0 +1,11 @@
+body {color:#F5F1E3; background-color:#000000; font-weight:200; text-align:left;}
+
+a {color:#E9995C; font-size: 1.5rem;}
+a:hover {color:#EAE5D4; background-color:#AD652B;}
+
+table, .table, table.dataframe.table {color:#F5F1E3; background-color:#000000; margin: 1rem;
+box-shadow:-8px 8px 20px #AFE174,
+            8px -8px 20px #8E8455;}
+
+hdr {color:#AFE174; font-weight:200; font-size: 2rem;}
+
