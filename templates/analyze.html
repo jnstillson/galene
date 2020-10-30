@@ -1,0 +1,56 @@
+{% extends "nav.html" %}
+
+
+
+{% block content %}
+<div class="container">
+    <h1>PCA Analysis</h1>
+    <div class="row">
+        <div class="col">
+            <canvas id="ligChart" width="600" height="600"></canvas>
+        </div>
+        <div class="col">
+            <form action="#" method="POST">
+                <input class="input-box" type="number" value="Number of Clusters" name="clustNum"/>
+                <input class="btn btn-block" type="submit" value="Recalculate Ligand Distribution" name="recalc"/>
+            </form>
+            <h3> {{cluster}} </h3>
+            <script>
+        var ctxlig = document.getElementById('ligChart');
+        var myligChart = new Chart(ctxlig, {
+            type: 'scatter',
+            data: {{ ligPlot|safe }},
+            options: {
+                responsive : false
+                }
+        });
+        </script>
+        </div>
+    </div>
+    <h1>Fragment Analysis</h1>
+    <div class="row">
+        <div class="col">
+            <canvas id="fragChart" width="600" height="600"></canvas>
+        </div>
+        <div class="col">
+            <form action="#" method="POST">
+                <input class="input-box" type="number" value="Number of Clusters" name="fclustNum"/>
+                <input class="btn btn-block" type="submit" value="Recalculate Fragment Distribution" name="recalc"/>
+            </form>
+            <h3> {{fcluster}} </h3>
+        </div>
+        <script>
+        var ctxfrag = document.getElementById('fragChart');
+        var myligChart = new Chart(ctxfrag, {
+            type: 'scatter',
+            data: {{ fragPlot|safe }},
+            options: {
+                responsive : false
+                }
+        });
+        </script>
+    </div>
+
+
+</div>
+{% endblock %}

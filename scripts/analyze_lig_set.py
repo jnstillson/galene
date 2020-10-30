@@ -7,11 +7,12 @@ from sklearn import metrics
 from rdkit.Chem import Recap
 from itertools import compress
 import networkx
+import numpy as np
 
 
 class AnalyzeLigSet():
 
-    def __init__(self, lig_set=None, full_init=False):
+    def __init__(self, lig_set=None, full_init=False, pca_plot=1, frag_plot=1):
 
         self.lig_set = lig_set
 
@@ -48,7 +49,31 @@ class AnalyzeLigSet():
         if full_init:
             self.full_init()
 
-        # need to add debug
+        if pca_plot is not None:
+            if int(pca_plot) == 0:
+                pca_plot = 1
+            try:
+                self.compute_similarity_matrix()
+                self.lig_space2 = self.pca_similarity_matrix(self.similarity_matrix)
+                clusters = self.k_means_lables(self.lig_space2, clusters=int(pca_plot))
+                self.pca_plot = self.scatter_to_js(self.lig_space2, clusters=clusters)
+            except:
+                self.pca_plot = '{x:0,y:0}'
+
+        if frag_plot is not None:
+            if int(frag_plot) == 0:
+                frag_plot = 1
+
+            self.sort_cores(self.find_cores(c=2 / 3))
+            self.compute_fsimilarity_matrix()
+            self.frag_space2 = self.pca_similarity_matrix(self.fsimilarity_matrix)
+            clusters = self.k_means_lables(self.frag_space2, clusters=int(frag_plot))
+            self.fpca_plot = self.scatter_to_js(self.frag_space2, clusters=clusters)
+
+            try:
+                pass
+            except:
+                self.fpca_plot = '{x:0,y:0}'
 
     def full_init(self):
 
@@ -183,6 +208,13 @@ class AnalyzeLigSet():
 
         #    self.lig_grouped = pd.Series(self.lig_set['ligand']).groupby(kmeans.labels_)
 
+    def k_means_lables(self, space, clusters=5):
+        kmeans = cluster.KMeans(init='k-means++', n_clusters=clusters, n_init=10, max_iter=300)
+
+        kmeans.fit(space.values)
+
+        return kmeans.labels_
+
     def k_means_analysis(self, space, k_min=2, k_max=8):
 
         sil_scores = []
@@ -270,10 +302,10 @@ class AnalyzeLigSet():
 
             assoc_ligs = [amb_cores.loc[amb_core, 'ligid'] for amb_core in u_core]
 
-            frag_set.at[frag_id, 'ligs'] = assoc_ligs
+            # frag_set.loc[frag_id, 'ligs'] = assoc_ligs
 
             for amb_core in u_core:
-                amb_cores.at[amb_core, 'fragid'] = frag_id
+                amb_cores.loc[amb_core, 'fragid'] = frag_id
 
             frag_id += 1
 
@@ -282,7 +314,7 @@ class AnalyzeLigSet():
         for u_lig in sorted_ligs:
             assoc_cores = [amb_cores.loc[amb_core, 'fragid'] for amb_core in u_lig]
 
-            self.lig_set.at[lig_id, 'frags'] = assoc_cores
+            # self.lig_set.loc[lig_id, 'frags'] = assoc_cores
 
             lig_id += 1
 
@@ -318,7 +350,29 @@ class AnalyzeLigSet():
 
         return frag_graph
 
-    '''
+    # helpful functions (might move to util file later, but this currently feels most applicable under the current class
+
+    def scatter_to_js(self, scatter, clusters):
+        # assuming the structure of the plot is [[x vals],[y vals]]
+        cluster_colors = ['#CFFBE2', '#AFDAF7', '#EFE583', '#B5AE4F',
+                          '#F9CD9B', '#D3CDFF', '#E1D776', '#F2A694', ]
+        scatter = np.array(scatter)
+        scatter_js = '{ datasets: [ '
+        for c in range(max(clusters) + 1):
+            scatter_js += '{'
+            scatter_js += f' label: "Cluster {c}", data: ['
+            for i in range(len(scatter)):
+                if clusters[i] == c:
+                    scatter_js += str('{ x: '
+                                      + str(scatter[i][0])
+                                      + ', y: '
+                                      + str(scatter[i][1])
+                                      + '},\n')
+            scatter_js += f'], backgroundColor : "{cluster_colors[c]}"'
+            scatter_js += '},'
+        scatter_js += '],}'
+        return scatter_js
+'''
 graph 1: in ligand space
 Nodes: unique ligands
 Edges: when two ligands share a scaffold
@@ -346,8 +400,6 @@ For the developemt ideas:
 4. Create a complete subgraph of all these nodes
 
 '''
-
-
 '''
 
 for better frag space analysis:

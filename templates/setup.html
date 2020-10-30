@@ -1,0 +1,42 @@
+{% extends "nav.html" %}
+
+{% block title %}
+Setup
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <hdr> Setup </hdr>
+            <p>
+                This is the file input for the ligands involved in the analysis. This should be a .smi or .sdf file:
+            </p>
+            <h3> Ligand Set </h3>
+            <form action="#" method="POST">
+                <input type="text" name="ligFile"/>
+                <input class="btn btn-block" type="submit" value="Upload File" />
+            </form>
+            <h4> {{ ligSuc }}</h4>
+
+            <p>
+                This is the file input for the receptors involved in the analysis. This should be a .txt file:
+            </p>
+
+            <h3> Receptor Set </h3>
+            <form action="#" method="POST">
+                <input type="text" name="recFile"/>
+                <input class="btn btn-block" type="submit" value="Upload File" />
+            </form>
+            <h4> {{ recSuc }}</h4>
+        </div>
+        <div class="col">
+            <hdr> smthg else </hdr>
+        </div>
+    </div>
+
+
+</div>
+
+{% endblock %}

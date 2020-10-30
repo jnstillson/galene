@@ -13,7 +13,27 @@ Receptor
             <p> {{rec.name|safe}} </p>
         </div>
         <div class="col">
-            <p>print picture here</p>
+            <script>
+                let molBlock = "{{ empty|safe }}";
+                let molFile = ChemDoodle.readMOL(molBlock);
+                let transformer = new ChemDoodle.TransformCanvas3D('transformer', 400, 400, true);
+                transformer.styles.backgroundColor = '#AFDAF7';
+                transformer.styles.bonds_color = '#394B41';
+                transformer.emptyMessage = 'No Data Loaded!';
+                transformer.loadMolecule(molFile);
+
+                 //an array of Point that will keep track of the path
+                 transformer.dragPath = [];
+                 //save the old handler
+                 transformer.oldDrag = transformer.drag;
+                 //define the new handler
+                 transformer.drag = function(e){
+                 //notice that you can use the "this" keyword in an object's function to access its variables
+                 this.dragPath[transformer.dragPath.length] = e.p;
+                 //call the old handler
+                 this.oldDrag(e);
+                 }
+            </script>
         </div>
     </div>
 

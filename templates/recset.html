@@ -11,7 +11,19 @@ Receptor Set
             <hdr class="customHeader">
                 Receptor Set
             </hdr>
-            {{ rec_set.to_html(classes="table")|safe }}
+            {% for rec in rec_set['receptor'] %}
+
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <div class="media">
+                            <div class="media-body">
+                               <a class="stretched-link" href="/rec/{{rec.name}}">{{ rec.name }}</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+            {% endfor %}
         </div>
         <div class="col-4">
             <hdr class="customHeader">
@@ -21,7 +33,7 @@ Receptor Set
                 <tbody>
                 <tr>
                     <th scope="col">Size</th>
-                    <td>0</td>
+                    <td> {{ props['size'] }} </td>
                 </tr>
                 <tr>
                     <th scope="col">Something</th>

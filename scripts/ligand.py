@@ -26,6 +26,7 @@ class Ligand():
         if mol is not None:
             self.smiles = AllChem.MolToSmiles(mol)
         
+
         self.frag_set = None
         self.conformer_set = []
         self.vina_result_poses = None
@@ -55,6 +56,7 @@ class Ligand():
         self.logp = Crippen.MolLogP(self.mol)
         self.mr = Crippen.MolMR(self.mol)
         self.ecfp = AllChem.GetMorganFingerprintAsBitVect(self.mol,2) #obviously these needs to be improved
+        self.mol_block = AllChem.MolToMolBlock(self.mol).encode(encoding='UTF-8')
 
     
     ## Ligand Preparation ##

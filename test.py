@@ -2,7 +2,6 @@
 if __name__ == '__main__':
     try:
         import rdkit.Chem
-
         pkg1 = 'Pass'
     except:
         pkg1 = 'Fail'
@@ -11,7 +10,6 @@ if __name__ == '__main__':
 
     try:
         import flask
-
         pkg2 = 'Pass'
     except:
         pkg2 = 'Fail'
@@ -20,7 +18,6 @@ if __name__ == '__main__':
 
     try:
         import pandas
-
         pkg3 = 'Pass'
     except:
         pkg3 = 'Fail'
@@ -29,18 +26,40 @@ if __name__ == '__main__':
 
     try:
         import sklearn
-
         pkg4 = 'Pass'
     except:
         pkg4 = 'Fail'
 
-    print('sklearn : ' + str(pkg1))
+    print('sklearn : ' + str(pkg4))
 
     try:
         import networkx
-
         pkg5 = 'Pass'
     except:
         pkg5 = 'Fail'
 
     print('Networkx : ' + str(pkg5))
+
+    try:
+        import ipywidgets
+        pkg6 = 'Pass'
+    except:
+        pkg6 = 'Fail'
+
+    print('Networkx : ' + str(pkg6))
+
+    try:
+        import ipywidgets
+        pkg7 = 'Pass'
+    except:
+        pkg7 = 'Fail'
+
+    print('Networkx : ' + str(pkg7))
+
+    try:
+        import numpy
+        pkg8 = 'Pass'
+    except:
+        pkg8 = 'Fail'
+
+    print('Numpy : ' + str(pkg8))

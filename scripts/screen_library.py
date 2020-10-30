@@ -8,7 +8,7 @@ class ScreenLibrary():
 
         # screen info
         self.name = name
-        self.lib_path = str('./' + self.name + '/')
+        self.lib_path = str('./data/' + self.name + '/')
 
         # library to be screened
         self.dock_set = []
@@ -41,6 +41,7 @@ class ScreenLibrary():
                            rig_file=str(tabs[7]),
                            pos=[tabs[1], tabs[2], tabs[3]],
                            dim=[tabs[4], tabs[5], tabs[6]],
+                           pdb_file=str(tabs[8]),
                            )
 
             self.rec_set.append(rec)
@@ -193,6 +194,7 @@ class ScreenLibrary():
 
             # attach results to ligand object
             lig = self.lig_set.loc[dock.lig_id, 'ligand']
+            lig.cheminformatic_analysis()
             r = self.rec_set.index(dock.rec)
             for i in range(len(mols)):
                 score = mols[i].GetProp('REMARK').split()[2]

@@ -1,0 +1,80 @@
+{% extends "nav.html" %}
+
+{% block title %}
+Dock
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <hdr> Docking Parameters </hdr>
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th> ligand number </th>
+                    <td> {{ display_set['lig_set_prop']['size'] }} </td>
+                </tr>
+                <tr>
+                    <th> receptor number</th>
+                    <td> {{ display_set['rec_set_prop']['size'] }} </td>
+                </tr>
+                <tr>
+                    <th>detected cores</th>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <th> exhaustivness </th>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <th> estimated docking time </th>
+                    <td>who knows</td>
+                </tr>
+                </tbody>
+            </table>
+            <form action="#" method="POST">
+                <input class="btn btn-block" type="submit" value="Update Parameters" name="dock"/>
+            </form>
+            <form action="#" method="POST">
+                <input class="btn btn-block" type="submit" value="Start Dock" name="dock"/>
+            </form>
+        </div>
+        <div class="col">
+            <script>
+                ChemDoodle.ELEMENT.C.jmolColor = '#394B41';
+                let molBlock = "{{ccc}}";
+                let molFile = ChemDoodle.readMOL(molBlock);
+                let transformer = new ChemDoodle.TransformCanvas('transformer', 400, 400, true);
+                transformer.styles.atoms_useJMOLColors = true;
+                transformer.styles.atoms_circles_2D = true;
+                transformer.styles.bonds_width_2D = 2;
+                transformer.styles.atoms_HBlack_2D = false;
+                transformer.styles.bonds_symmetrical_2D = true;
+                transformer.styles.backgroundColor = '#AFDAF7';
+                transformer.styles.bonds_color = '#394B41';
+                transformer.emptyMessage = 'No Data Loaded!';
+                transformer.loadMolecule(molFile);
+
+
+
+                 //an array of Point that will keep track of the path
+                 transformer.dragPath = [];
+                 //save the old handler
+                 transformer.oldDrag = transformer.drag;
+                 //define the new handler
+                 transformer.drag = function(e){
+                 //notice that you can use the "this" keyword in an object's function to access its variables
+                 this.dragPath[transformer.dragPath.length] = e.p;
+                 //call the old handler
+                 this.oldDrag(e);
+                 }
+            </script>
+        </div>
+    </div>
+
+
+</div>
+
+{% endblock %}

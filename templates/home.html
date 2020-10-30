@@ -1,0 +1,94 @@
+{% extends "nav.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <hdr> Operations </hdr>
+            <ul class="list-group">
+                <li class="list-group-item parentbox">
+                    <hdr>Start</hdr>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                    <a class="stretched-link" href="/setup">Upload</a>
+                </li>
+                        <li class="list-group-item">
+                    <a class="stretched-link" href="/dock">Dock</a>
+                </li>
+                    </ul>
+                </li>
+                <li class="list-group-item parentbox">
+                    <hdr>Unsupervised Analysis</hdr>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                    <a class="stretched-link" href="/analyze">Chemical Space Clustering</a>
+                </li>
+                        <li class="list-group-item">
+                    <a class="stretched-link" href="/analyze">Fragment Analysis</a>
+                </li>
+                    </ul>
+                </li>
+                <li class="list-group-item parentbox">
+                    <hdr>Supervised Analysis</hdr>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                    <a class="stretched-link" href="/analyze">Chemical Space Clustering</a>
+                </li>
+                        <li class="list-group-item">
+                    <a class="stretched-link" href="/analyze">Selectivity Maybe</a>
+                </li>
+                    </ul>
+                </li>
+                <li class="list-group-item parentbox">
+                    <hdr>Other</hdr>
+                    <ul class="list-group">
+
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="col">
+            <hdr> Results </hdr>
+            <ul class="list-group">
+                <li class="list-group-item parentbox">
+                    <hdr>Small Molecule</hdr>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a class="stretched-link" href="/results">Ligand, Unsupervised</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a class="stretched-link" href="/results">Ligand, Supervised</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a class="stretched-link" href="/results">Conformer</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="list-group-item parentbox">
+                    <hdr>Protein</hdr>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a class="stretched-link" href="/results">Sequence</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a class="stretched-link" href="/results">Structure</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a class="stretched-link" href="/results">Surface</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+</div>
+
+{% endblock %}

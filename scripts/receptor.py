@@ -10,12 +10,12 @@ class Receptor():
                  rig_file,
                  pos,
                  dim,
+                 pdb_file,
                  ):
         self.name = name
 
         self.rig_file = rig_file
-
-        # self.mol = AllChem.MolFromMol2File(mol2_file, sanitize = False)
+        #self.mol_block = AllChem.MolToMolBlock(AllChem.MolFromPDBFile(pdb_file))
 
         self.pos = pos
         self.dim = dim

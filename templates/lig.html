@@ -22,12 +22,39 @@ Ligand
         <p> {{lig.mmass|safe}} </p>
         </div>
         <div class="col">
-         <img src="/lig/img/{{ lig.name|safe}}.jpeg" >
-    </div>
-    </div>
+            <script>
+                ChemDoodle.ELEMENT.C.jmolColor = '#394B41';
+                let molBlock = "{{ molBlock }}";
+                let molFile = ChemDoodle.readMOL(molBlock);
+                let transformer = new ChemDoodle.TransformCanvas('transformer', 400, 400, true);
+                transformer.styles.atoms_useJMOLColors = true;
+                transformer.styles.atoms_circles_2D = true;
+                transformer.styles.bonds_width_2D = 2;
+                transformer.styles.atoms_HBlack_2D = false;
+                transformer.styles.bonds_symmetrical_2D = true;
+                transformer.styles.backgroundColor = '#AFDAF7';
+                transformer.styles.bonds_color = '#394B41';
+                transformer.emptyMessage = 'No Data Loaded!';
+                transformer.loadMolecule(molFile);
 
-</div>
-<div class="container">
+
+
+                 //an array of Point that will keep track of the path
+                 transformer.dragPath = [];
+                 //save the old handler
+                 transformer.oldDrag = transformer.drag;
+                 //define the new handler
+                 transformer.drag = function(e){
+                 //notice that you can use the "this" keyword in an object's function to access its variables
+                 this.dragPath[transformer.dragPath.length] = e.p;
+                 //call the old handler
+                 this.oldDrag(e);
+                 }
+            </script>
+            <!-- <img src="/lig/img/{{ lig.name|safe}}.jpeg" > -->
+        </div>
+    </div>
+    <h1>General Properties</h1>
     <div class="row">
         <div class="col">
             <table class="table">
@@ -51,16 +78,76 @@ Ligand
                 <th scope="col">LogP</th>
                 <td>{{lig.logp|safe}}</td>
             </tr>
-
+            <tr>
+                <th scope="col">H-Bond Donors</th>
+                <td>{{lig.h_don|safe}}</td>
+            </tr>
+            <tr>
+                <th scope="col">H-Bond Acceptors</th>
+                <td>{{lig.h_acc|safe}}</td>
+            </tr>
             </tbody>
             </table>
         </div>
         <div class="col">
-            <hdr>
-                Docking Results (1 protein)
-            </hdr>
-            {{ lig.vina_result_scores[0]|safe }}
+        <canvas id="myChart" width="400" height="400"></canvas>
+            <script>
+            let dat = [{{lig.logp}},{{lig.mmass / 100}},{{lig.mr/10}},{{lig.h_don}},{{lig.h_acc}}];
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['LogP', 'MW', 'MR', 'HBD', 'HBA'],
+                    datasets: [{
+                        label: 'Bioavailability',
+                        data: dat,
+                        backgroundColor: [
+                            'rgb(121, 163, 191)',
+                        ],
+                        borderColor: [
+                            'rgb(175, 218, 247)',
+                        ],
+                        borderWidth: 2,
+                        fill: true
+                    }],
+                },
 
+                options: {
+                    responsive : false,
+                    scale: {
+                        ticks: {
+                            beginAtZero: true,
+                            showLabelBackdrop: false
+                        },
+                        angleLines: {
+                            color: 'rgb(57, 75, 65)'
+                        },
+                        gridLines: {
+                            color: 'rgb(57, 75, 65)'
+                        }
+                    }
+                }
+            });
+            </script>
+        </div>
+    </div>
+    <h1>Docking Results</h1>
+    <div class="row">
+        <div class="col">
+            <form action="#" method="POST">
+                {% for rec in display_set['rec_set']['name'] %}
+                <input class="btn" type="submit" value="{{rec}}" name= "rec"/>
+                {% endfor %}
+            </form>
+
+        </div>
+        <div class="col">
+            <h4>
+                results matrix for {{ curRec }} goes here
+            </h4>
+            <p>
+                {{ lig.vina_result_scores|safe }}
+            </p>
         </div>
     </div>
 </div>

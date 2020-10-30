@@ -61,6 +61,7 @@ def lig_set_from_gypsum(sdf):
         # (this could be problematic if input has ambiguous sterocentres)
         lig_set.loc[i, 'ligand'].smiles = AllChem.MolToSmiles(lig_set.loc[i, 'ligand'].conformer_set[0])
         lig_set.loc[i, 'ligand'].mol = AllChem.MolFromSmiles(lig_set.loc[i, 'ligand'].smiles)
+        lig_set.loc[i, 'ligand'].name = names[i]
 
     return lig_set
 
@@ -79,6 +80,7 @@ def rec_set_from_file(txt):
                        rig_file=str(tabs[7]),
                        pos=[tabs[1], tabs[2], tabs[3]],
                        dim=[tabs[4], tabs[5], tabs[6]],
+                       pdb_file=tabs[8],
                        )
         recs.append(rec)
 

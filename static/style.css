@@ -1,11 +1,28 @@
-body {color:#F5F1E3; background-color:#000000; font-weight:200; text-align:left;}
+body {color:#CFFBE2; background-color:#394B41; font-weight:200; text-align:left; background-image:url(/static/bkgd.png); background-size:cover;}
 
-a {color:#E9995C; font-size: 1.5rem;}
-a:hover {color:#EAE5D4; background-color:#AD652B;}
+a {color:#9CB0A4; font-size: 1.5rem;}
+a:hover {color:#AFDAF7; background-color:#9CB0A4;}
 
-table, .table, table.dataframe.table {color:#F5F1E3; background-color:#000000; margin: 1rem;
-box-shadow:-8px 8px 20px #AFE174,
-            8px -8px 20px #8E8455;}
+table, .table, table.dataframe.table {color: #CFFBE2; background-color:#000000; margin: 1rem;
+box-shadow:0px 0px 32px #394B41;}
 
-hdr {color:#AFE174; font-weight:200; font-size: 2rem;}
+hdr, .hdr {font-size: 2rem;}
+hdr, .hdr, h1, h2, h3, h4, h5, h6 {color:#AFE174; font-weight:200;}
+
+.input-group-text {color:#394B41; background-color:#9CB0A4; border: 0px;}
+.custom-file-label {color:#394B41; background-color:#AFDAF7; border: 0px;}
+.custom-file-label::after {color:#394B41; background-color:#9CB0A4; border: 0px;}
+
+.list-group-item {background-color:#000000;}
+.list-group-item:hover {background-color:#9CB0A4}
+
+.parentbox { background-color: #000000; }
+.parentbox:hover { background-color: #394B41; }
+
+.navbar { background-color : #000000; box-shadow:0px 0px 32px #394B41;}
+
+.input-box { background-color : #394B41; color: #AFDAF7; border: 0px;}
+
+.btn, .btn-block {color:#000000; font-size: 1 rem; font-weight: 200; background-color:#9CB0A4;}
+.btn:hover, .btn-block:hover {color:#AFDAF7; background-color:#000000;}
 

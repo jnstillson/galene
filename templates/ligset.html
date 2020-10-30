@@ -5,13 +5,36 @@ Ligand Set
 {% endblock %}
 
 {% block content %}
+
+<!--have the function generate all thumbnails at once in a list-->
+<script>
+    function thumbnail(molBlock) {
+    let thumb = new ChemDoodle.ViewerCanvas('thumb',50,50);
+    let molFile = ChemDoodle.readMOL(molBlock);
+    return thumb.loadMolecule(molFile);
+    }
+</script>
+
 <div class = "container">
     <div class="row">
         <div class="col-6">
             <hdr class="customHeader">
                 Ligand Set
             </hdr>
-            {{ lig_set.to_html(classes='table')|safe }}
+
+            {% for lig in lig_set['ligand'] %}
+
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <div class="media">
+                            <div class="media-body">
+                               <a class="stretched-link" href="/lig/{{lig.name}}">{{ lig.name }}</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+            {% endfor %}
         </div>
         <div class="col-4">
             <hdr class="customHeader">
@@ -21,18 +44,69 @@ Ligand Set
                 <tbody>
                 <tr>
                     <th scope="col">Size</th>
-                    <td>0</td>
+                    <td>{{ props['size'] }}</td>
                 </tr>
                 <tr>
-                    <th scope="col">Av Mass</th>
-                    <td>0</td>
+                    <th scope="col">Average Mass</th>
+                    <td>{{ props['av mmass'] }}</td>
                 </tr>
                 <tr>
-                    <th scope="col">Av LogP</th>
-                    <td>0</td>
+                    <th scope="col">Average LogP</th>
+                    <td>{{ props['av logp'] }}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Average H-Bond Donors</th>
+                    <td>{{ props['av h_don'] }}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Average H-Bond Acceptors</th>
+                    <td>{{ props['av h_acc'] }}</td>
                 </tr>
                 </tbody>
            </table>
+            <canvas id="myChart" width="400" height="400"></canvas>
+            <script>
+            let dat =  [{{ props['av logp'] }},
+                        {{ props['av mmass'] / 100 }},
+                        {{ props['av mr']/10 }},
+                        {{ props['av h_don'] }},
+                        {{ props['av h_acc'] }}];
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['LogP', 'MW', 'MR', 'HBD', 'HBA'],
+                    datasets: [{
+                        label: 'Average Bioavailability',
+                        data: dat,
+                        backgroundColor: [
+                            'rgb(121, 163, 191)',
+                        ],
+                        borderColor: [
+                            'rgb(175, 218, 247)',
+                        ],
+                        borderWidth: 2,
+                        fill: true
+                    }],
+                },
+
+                options: {
+                    responsive : false,
+                    scale: {
+                        ticks: {
+                            beginAtZero: true,
+                            showLabelBackdrop: false
+                        },
+                        angleLines: {
+                            color: 'rgb(57, 75, 65)'
+                        },
+                        gridLines: {
+                            color: 'rgb(57, 75, 65)'
+                        }
+                    }
+                }
+            });
+            </script>
         </div>
     </div>
 </div>
