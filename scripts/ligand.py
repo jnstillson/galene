@@ -64,24 +64,21 @@ class Ligand():
         
     #prepares the 3D structure of the molecule to yeild a useful pdb block
     
-    def prep_struct(self):
+    def prep_default_conf(self):
     
         # Assign Structure
-        self.mol = AllChem.MolFromSmiles(self.smiles)
+        conf = self.mol
         
         # Add Hydrogens
-        AllChem.AddHs(self.mol) #account for pKa!!
+        AllChem.AddHs(conf) #account for pKa!!
     
         #Generate 3D Coordinates
-        AllChem.EmbedMolecule(self.mol, randomSeed = 0xf00d) #random seed???
+        AllChem.EmbedMolecule(conf, randomSeed = 0xf00d) #random seed???
         
         #Minimize coordinates
-        AllChem.MMFFOptimizeMolecule(self.mol)
-
-        ### NOTE if you want any precomputed 3D dependent coordinates this would be the place to compute them
-        
-           
-
+        #AllChem.MMFFOptimizeMolecule(conf)
+        print('conformer added!')
+        self.conformer_set.append(conf)
     
     ## Miscellaneous ##
     

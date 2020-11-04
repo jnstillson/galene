@@ -15,7 +15,8 @@ class Receptor():
         self.name = name
 
         self.rig_file = rig_file
-        #self.mol_block = AllChem.MolToMolBlock(AllChem.MolFromPDBFile(pdb_file))
+        self.pdb_file = pdb_file
+        self.mol_block = AllChem.MolToPDBBlock(AllChem.MolFromPDBFile(pdb_file, sanitize=False)).encode(encoding='UTF-8')
 
         self.pos = pos
         self.dim = dim

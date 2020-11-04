@@ -1,0 +1,83 @@
+COMPND    bc02
+HETATM    1  C1  UNL     1      -0.120  -3.819   5.078  1.00  0.00           C  
+HETATM    2  O1  UNL     1       0.565  -3.063   4.085  1.00  0.00           O  
+HETATM    3  C2  UNL     1      -0.035  -2.543   2.928  1.00  0.00           C  
+HETATM    4  C3  UNL     1      -1.393  -2.752   2.631  1.00  0.00           C  
+HETATM    5  C4  UNL     1      -1.956  -2.213   1.474  1.00  0.00           C  
+HETATM    6  C5  UNL     1      -1.178  -1.458   0.577  1.00  0.00           C  
+HETATM    7  C6  UNL     1      -1.795  -0.906  -0.667  1.00  0.00           C  
+HETATM    8  N1  UNL     1      -2.963  -1.357  -1.041  1.00  0.00           N  
+HETATM    9  N2  UNL     1      -3.641  -1.010  -2.237  1.00  0.00           N1+
+HETATM   10  C7  UNL     1      -3.272  -1.939  -3.349  1.00  0.00           C  
+HETATM   11  C8  UNL     1      -4.273  -1.836  -4.539  1.00  0.00           C  
+HETATM   12  C9  UNL     1      -5.528  -2.719  -4.408  1.00  0.00           C  
+HETATM   13  C10 UNL     1      -5.332  -4.099  -5.056  1.00  0.00           C  
+HETATM   14  C11 UNL     1      -4.444  -5.042  -4.238  1.00  0.00           C  
+HETATM   15  C12 UNL     1      -3.048  -4.474  -3.939  1.00  0.00           C  
+HETATM   16  C13 UNL     1      -3.083  -3.400  -2.838  1.00  0.00           C  
+HETATM   17  C14 UNL     1      -3.406   0.388  -2.564  1.00  0.00           C  
+HETATM   18  O2  UNL     1      -4.281   1.034  -3.124  1.00  0.00           O  
+HETATM   19  C15 UNL     1      -2.147   1.106  -2.119  1.00  0.00           C  
+HETATM   20  C16 UNL     1      -1.520   1.959  -3.233  1.00  0.00           C  
+HETATM   21  C17 UNL     1      -0.884   1.099  -4.279  1.00  0.00           C  
+HETATM   22  C18 UNL     1      -0.221  -0.013  -3.947  1.00  0.00           C  
+HETATM   23  C19 UNL     1      -0.113  -0.508  -2.525  1.00  0.00           C  
+HETATM   24  C20 UNL     1      -1.099   0.147  -1.506  1.00  0.00           C  
+HETATM   25  C21 UNL     1       0.184  -1.260   0.875  1.00  0.00           C  
+HETATM   26  C22 UNL     1       0.753  -1.786   2.051  1.00  0.00           C  
+HETATM   27  O3  UNL     1       2.098  -1.567   2.387  1.00  0.00           O  
+HETATM   28  C23 UNL     1       2.963  -0.664   1.701  1.00  0.00           C  
+HETATM   29  C24 UNL     1       4.289  -0.565   2.455  1.00  0.00           C  
+HETATM   30  C25 UNL     1       5.279   0.415   1.801  1.00  0.00           C  
+HETATM   31  C26 UNL     1       4.807   1.875   1.823  1.00  0.00           C  
+HETATM   32  O4  UNL     1       4.400   2.243   3.139  1.00  0.00           O  
+HETATM   33  C27 UNL     1       3.853   3.486   3.485  1.00  0.00           C  
+HETATM   34  C28 UNL     1       3.759   4.551   2.572  1.00  0.00           C  
+HETATM   35  C29 UNL     1       3.205   5.772   2.968  1.00  0.00           C  
+HETATM   36  C30 UNL     1       2.729   5.948   4.279  1.00  0.00           C  
+HETATM   37  C31 UNL     1       2.140   7.237   4.697  1.00  0.00           C  
+HETATM   38  N3  UNL     1       1.635   7.484   5.924  1.00  0.00           N  
+HETATM   39  N4  UNL     1       1.220   8.739   5.878  1.00  0.00           N1-
+HETATM   40  N5  UNL     1       1.463   9.230   4.675  1.00  0.00           N1+
+HETATM   41  N6  UNL     1       2.037   8.322   3.904  1.00  0.00           N  
+HETATM   42  C32 UNL     1       2.822   4.880   5.186  1.00  0.00           C  
+HETATM   43  C33 UNL     1       3.382   3.662   4.791  1.00  0.00           C  
+CONECT    1    2
+CONECT    2    3
+CONECT    3    4    4   26
+CONECT    4    5
+CONECT    5    6    6
+CONECT    6    7   25
+CONECT    7    8    8   24
+CONECT    8    9
+CONECT    9   10   17
+CONECT   10   11   16
+CONECT   11   12
+CONECT   12   13
+CONECT   13   14
+CONECT   14   15
+CONECT   15   16
+CONECT   17   18   18   19
+CONECT   19   20   24
+CONECT   20   21
+CONECT   21   22   22
+CONECT   22   23
+CONECT   23   24
+CONECT   25   26   26
+CONECT   26   27
+CONECT   27   28
+CONECT   28   29
+CONECT   29   30
+CONECT   30   31
+CONECT   31   32
+CONECT   32   33
+CONECT   33   34   34   43
+CONECT   34   35
+CONECT   35   36   36
+CONECT   36   37   42
+CONECT   37   38   38   41
+CONECT   38   39
+CONECT   39   40
+CONECT   40   41   41
+CONECT   42   43   43
+END

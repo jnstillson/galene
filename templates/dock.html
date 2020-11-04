@@ -10,35 +10,42 @@ Dock
     <div class="row">
         <div class="col">
             <hdr> Docking Parameters </hdr>
-            <table class="table">
-                <tbody>
-                <tr>
-                    <th> ligand number </th>
-                    <td> {{ display_set['lig_set_prop']['size'] }} </td>
-                </tr>
-                <tr>
-                    <th> receptor number</th>
-                    <td> {{ display_set['rec_set_prop']['size'] }} </td>
-                </tr>
-                <tr>
-                    <th>detected cores</th>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <th> exhaustivness </th>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <th> estimated docking time </th>
-                    <td>who knows</td>
-                </tr>
-                </tbody>
-            </table>
-            <form action="#" method="POST">
+                <form action="#" method="POST">
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <th> ligand number </th>
+                        <td> {{ display_set['lig_set_prop']['size'] }} </td>
+                    </tr>
+                    <tr>
+                        <th> receptor number</th>
+                        <td> {{ display_set['rec_set_prop']['size'] }} </td>
+                    </tr>
+                    <tr>
+                        <th>detected cores</th>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <th> exhaustivness </th>
+                        <td>
+                            <input type="number" value="{{ex}}" name="ex"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th> name </th>
+                        <td>
+                            <input type="text" value="{{name}}" name="name"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th> estimated docking time </th>
+                        <td>who knows</td>
+                    </tr>
+                    </tbody>
+                </table>
+
                 <input class="btn btn-block" type="submit" value="Update Parameters" name="dock"/>
-            </form>
-            <form action="#" method="POST">
-                <input class="btn btn-block" type="submit" value="Start Dock" name="dock"/>
+                    <input class="btn btn-block" type="submit" value="Start Dock" name="dock"/>
             </form>
         </div>
         <div class="col">

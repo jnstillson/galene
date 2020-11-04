@@ -6,6 +6,33 @@ Results
 
 {% block content %}
 <div class="container">
-    <hdr>Results</hdr>
+    <div class="row">
+        <div class="col">
+            <h1>Results</h1>
+            <canvas id="ligChart" width="600" height="600"></canvas>
+
+        </div>
+        <div class="col">
+            <form action="#" method="POST">
+                {% for rec in display_set['rec_set']['name'] %}
+                <input class="btn" type="submit" value="{{rec}}" name="rec"/>
+                {% endfor %}
+            </form>
+
+        </div>
+        <script>
+        var ctxlig = document.getElementById('ligChart');
+        var myligChart = new Chart(ctxlig, {
+            type: 'scatter',
+            data: {{ display_set['result_plot']|safe }},
+            options: {
+                responsive : false
+                }
+        });
+        </script>
+    </div>
+
+
+
 </div>
 {% endblock %}

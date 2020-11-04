@@ -55,10 +55,11 @@ class AnalyzeLigSet():
             try:
                 self.compute_similarity_matrix()
                 self.lig_space2 = self.pca_similarity_matrix(self.similarity_matrix)
-                clusters = self.k_means_lables(self.lig_space2, clusters=int(pca_plot))
-                self.pca_plot = self.scatter_to_js(self.lig_space2, clusters=clusters)
+                self.clusters = self.k_means_lables(self.lig_space2, clusters=int(pca_plot))
+                self.pca_plot = scatter_to_js(self.lig_space2, clusters=self.clusters)
             except:
                 self.pca_plot = '{x:0,y:0}'
+                pass
 
         if frag_plot is not None:
             if int(frag_plot) == 0:
@@ -67,8 +68,8 @@ class AnalyzeLigSet():
             self.sort_cores(self.find_cores(c=2 / 3))
             self.compute_fsimilarity_matrix()
             self.frag_space2 = self.pca_similarity_matrix(self.fsimilarity_matrix)
-            clusters = self.k_means_lables(self.frag_space2, clusters=int(frag_plot))
-            self.fpca_plot = self.scatter_to_js(self.frag_space2, clusters=clusters)
+            self.fclusters = self.k_means_lables(self.frag_space2, clusters=int(frag_plot))
+            self.fpca_plot = scatter_to_js(self.frag_space2, clusters=self.fclusters)
 
             try:
                 pass
@@ -352,26 +353,6 @@ class AnalyzeLigSet():
 
     # helpful functions (might move to util file later, but this currently feels most applicable under the current class
 
-    def scatter_to_js(self, scatter, clusters):
-        # assuming the structure of the plot is [[x vals],[y vals]]
-        cluster_colors = ['#CFFBE2', '#AFDAF7', '#EFE583', '#B5AE4F',
-                          '#F9CD9B', '#D3CDFF', '#E1D776', '#F2A694', ]
-        scatter = np.array(scatter)
-        scatter_js = '{ datasets: [ '
-        for c in range(max(clusters) + 1):
-            scatter_js += '{'
-            scatter_js += f' label: "Cluster {c}", data: ['
-            for i in range(len(scatter)):
-                if clusters[i] == c:
-                    scatter_js += str('{ x: '
-                                      + str(scatter[i][0])
-                                      + ', y: '
-                                      + str(scatter[i][1])
-                                      + '},\n')
-            scatter_js += f'], backgroundColor : "{cluster_colors[c]}"'
-            scatter_js += '},'
-        scatter_js += '],}'
-        return scatter_js
 '''
 graph 1: in ligand space
 Nodes: unique ligands

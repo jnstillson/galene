@@ -4,7 +4,10 @@ from .receptor import *
 
 class ScreenLibrary():
 
-    def __init__(self, lig_set, name='Test'):
+    def __init__(self,
+                 lig_set,
+                 rec_set,
+                 name='Test',):
 
         # screen info
         self.name = name
@@ -12,7 +15,7 @@ class ScreenLibrary():
 
         # library to be screened
         self.dock_set = []
-        self.rec_set = []
+        self.rec_set = rec_set
         self.lig_set = lig_set
         self.conf_set = []
         for i in range(len(lig_set)):
@@ -26,31 +29,9 @@ class ScreenLibrary():
 
         ##  ###  ## Determination of library contents ##  ###  ##
 
-    # import receptor file function (called by collect_file())
-
-    # no import of flex files
-
-    def import_rec_file(self):
-
-        rec_file = open(self.rec_file, 'r')
-        lines = rec_file.readlines()
-
-        for line in lines:
-            tabs = line.split()
-            rec = Receptor(name=str(tabs[0]),
-                           rig_file=str(tabs[7]),
-                           pos=[tabs[1], tabs[2], tabs[3]],
-                           dim=[tabs[4], tabs[5], tabs[6]],
-                           pdb_file=str(tabs[8]),
-                           )
-
-            self.rec_set.append(rec)
-
-        rec_file.close()
-
     def create_dock_set(self):
 
-        for rec in self.rec_set:
+        for rec in self.rec_set['receptor']:
 
             c = 0
             for conf in self.conf_set:
@@ -71,7 +52,7 @@ class ScreenLibrary():
             # linux command (I dont think so anymore)
             try:
 
-                sb.run('mkdir ' + self.name, shell=True)
+                sb.run('mkdir ' + self.lib_path, shell=True)
 
                 sb.run('mkdir ' + self.lib_path + 'pdb', shell=True)
                 sb.run('mkdir ' + self.lib_path + 'pdbqt', shell=True)
@@ -83,7 +64,7 @@ class ScreenLibrary():
             # mac command??
             except:
 
-                sb.run('mkdir ' + self.name, shell=True, stdout=sb.PIPE, text=True, check=True)
+                sb.run('mkdir ' + self.lib_path, shell=True, stdout=sb.PIPE, text=True, check=True)
                 sb.run('mkdir ' + self.lib_path + 'pdb', shell=True, stdout=sb.PIPE, text=True, check=True)
                 sb.run('mkdir ' + self.lib_path + 'pdbqt', shell=True, stdout=sb.PIPE, text=True, check=True)
                 sb.run('mkdir ' + self.lib_path + 'res_pdbqt', shell=True, stdout=sb.PIPE, text=True, check=True)
@@ -128,7 +109,6 @@ class ScreenLibrary():
 
             except:
 
-                Dock.lig.flag_issue()
                 problematic_ligands += 1
 
             i += 1
@@ -180,26 +160,25 @@ class ScreenLibrary():
             path = self.lib_path
         problematic_ligands = 0
         for lig in self.lig_set['ligand']:
-            lig.vina_result_scores = [pd.DataFrame() for _ in range(len(self.rec_set))]
-            lig.vina_result_poses = [pd.DataFrame() for _ in range(len(self.rec_set))]
+            lig.vina_result_scores = [pd.DataFrame() for _ in range(len(self.rec_set['receptor']))]
+            lig.vina_result_poses = [pd.DataFrame() for _ in range(len(self.rec_set['receptor']))]
 
         for dock in self.dock_set:
             file = str(path + 'res_sdf/' + dock.name + '.sdf')
             mols = [mol for mol in AllChem.SDMolSupplier(file)]
-
-            if mols is None:
-                problematic_ligands += 1
-            #attach results to dock object
             dock.conformations = mols
 
             # attach results to ligand object
             lig = self.lig_set.loc[dock.lig_id, 'ligand']
             lig.cheminformatic_analysis()
-            r = self.rec_set.index(dock.rec)
+            r = list(self.rec_set['receptor']).index(dock.rec)
             for i in range(len(mols)):
-                score = mols[i].GetProp('REMARK').split()[2]
-                lig.vina_result_scores[r].loc[i, dock.conf_id] = score
-                lig.vina_result_poses[r].loc[i, dock.conf_id] = mols[i]
+                try:
+                    score = mols[i].GetProp('REMARK').split()[2]
+                    lig.vina_result_scores[r].loc[i, dock.conf_id] = float(score)
+                    lig.vina_result_poses[r].loc[i, dock.conf_id] = mols[i]
+                except:
+                    problematic_ligands += 1
 
         print('\nNumber of empty results: ' + str(problematic_ligands) + '\n')
 

@@ -5,6 +5,7 @@ Purpose: Import, Export, File Handling for data sets
 '''
 from .ligand import *
 from .receptor import *
+from .screen_library import *
 import pandas as pd
 
 
@@ -21,7 +22,10 @@ def lig_set_from_smi(smi):
     for line in lines:
         tabs = line.split()
 
-        ligs.append(Ligand(smiles=str(tabs[0]), name=str(tabs[1])))
+        lig = Ligand(smiles=str(tabs[0]), name=str(tabs[1]))
+        lig.prep_default_conf()
+        ligs.append(lig)
+
         names.append(str(tabs[1]))
 
     lig_set = pd.DataFrame({'name': names,
@@ -62,6 +66,8 @@ def lig_set_from_gypsum(sdf):
         lig_set.loc[i, 'ligand'].smiles = AllChem.MolToSmiles(lig_set.loc[i, 'ligand'].conformer_set[0])
         lig_set.loc[i, 'ligand'].mol = AllChem.MolFromSmiles(lig_set.loc[i, 'ligand'].smiles)
         lig_set.loc[i, 'ligand'].name = names[i]
+
+        lig_set.loc[i, 'ligand'].cheminformatic_analysis()
 
     return lig_set
 

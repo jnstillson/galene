@@ -143,11 +143,13 @@ Ligand
         </div>
         <div class="col">
             <h4>
-                results matrix for {{ curRec }} goes here
+                results matrix for {{ display_set['rec_set']['name'][recid] }}
             </h4>
-            <p>
-                {{ lig.vina_result_scores|safe }}
-            </p>
+            {% if not lig.vina_result_scores == None %}
+            <table>
+                {{ lig.vina_result_scores[recid].to_html()|safe }}
+            </table>
+            {% endif %}
         </div>
     </div>
 </div>

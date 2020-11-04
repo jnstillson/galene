@@ -9,34 +9,44 @@ Setup
 <div class="container">
     <div class="row">
         <div class="col">
-            <hdr> Setup </hdr>
-            <p>
-                This is the file input for the ligands involved in the analysis. This should be a .smi or .sdf file:
-            </p>
-            <h3> Ligand Set </h3>
             <form action="#" method="POST">
-                <input type="text" name="ligFile"/>
-                <input class="btn btn-block" type="submit" value="Upload File" />
+                <table>
+                    <tr>
+                        <td>
+                            Ligand File
+                        </td>
+                        <td>
+                            <input type="text" name="lig file"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Receptor File
+                        </td>
+                        <td>
+                            <input type="text" name="rec file"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Results Folder
+                        </td>
+                        <td>
+                            <input type="text" name="result folder">
+                        </td>
+                    </tr>
+            </table>
+                <input type="submit" class="btn btn-block" value="Upload" name="upload"/>
             </form>
-            <h4> {{ ligSuc }}</h4>
 
-            <p>
-                This is the file input for the receptors involved in the analysis. This should be a .txt file:
-            </p>
-
-            <h3> Receptor Set </h3>
-            <form action="#" method="POST">
-                <input type="text" name="recFile"/>
-                <input class="btn btn-block" type="submit" value="Upload File" />
-            </form>
-            <h4> {{ recSuc }}</h4>
         </div>
         <div class="col">
-            <hdr> smthg else </hdr>
+            <h3> Gypsum-DL Dock Prep </h3>
+            <form action="#" method="POST">
+
+            </form>
         </div>
     </div>
-
-
 </div>
 
 {% endblock %}
