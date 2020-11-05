@@ -3,8 +3,9 @@ body {color:#CFFBE2; background-color:#394B41; font-weight:200; text-align:left;
 a {color:#9CB0A4; font-size: 1.5rem;}
 a:hover {color:#AFDAF7; background-color:#9CB0A4;}
 
-table, .table, table.dataframe.table {color: #CFFBE2; background-color:#000000; margin: 1rem;
+table, .table, table.dataframe.table {color: #CFFBE2;
 box-shadow:0px 0px 32px #394B41;}
+.table td, .table th {border-width: 0px;}
 
 hdr, .hdr {font-size: 2rem;}
 hdr, .hdr, h1, h2, h3, h4, h5, h6 {color:#AFE174; font-weight:200;}

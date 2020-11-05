@@ -4,6 +4,29 @@ This file will be for tracking utility stuff, wall times, error handling etc
 
 '''
 import numpy as np
+import json
+import subprocess as sb
+
+def params_to_json(params):
+    name = 'gypsum_params.json'
+
+    with open(name, 'w') as file:
+        json.dump(params, file)
+
+    return
+
+def run_gyupsum(smifile):
+    gypsum_command = 'python3 gypsum_dl-1.1.7/run_gypsum_dl.py --json gypsum_params.json'
+    sdffile = smifile[:-3] + 'sdf'
+    rename_command = f'mv data/lig/gypsum_dl_success.sdf {sdffile}'
+    try:
+        sb.run(gypsum_command, shell=True)
+        sb.run(rename_command, shell=True)
+        return sdffile
+
+    except:
+        print('gypsum failed :(')
+        return smifile
 
 def scatter_to_js(scatter, clusters):
     # assuming the structure of the plot is [[x vals],[y vals]]

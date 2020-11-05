@@ -9,14 +9,15 @@ Setup
 <div class="container">
     <div class="row">
         <div class="col">
+            <h3> File Upload </h3>
             <form action="#" method="POST">
-                <table>
+                <table class="table">
                     <tr>
                         <td>
                             Ligand File
                         </td>
                         <td>
-                            <input type="text" name="lig file"/>
+                            <input class="input-box" type="text" name="lig file"/>
                         </td>
                     </tr>
                     <tr>
@@ -24,7 +25,7 @@ Setup
                             Receptor File
                         </td>
                         <td>
-                            <input type="text" name="rec file"/>
+                            <input class="input-box" type="text" name="rec file"/>
                         </td>
                     </tr>
                     <tr>
@@ -32,7 +33,7 @@ Setup
                             Results Folder
                         </td>
                         <td>
-                            <input type="text" name="result folder">
+                            <input class="input-box" type="text" name="result folder">
                         </td>
                     </tr>
             </table>
@@ -43,7 +44,33 @@ Setup
         <div class="col">
             <h3> Gypsum-DL Dock Prep </h3>
             <form action="#" method="POST">
-
+                <table class="table">
+                    <tr>
+                        <td>
+                            max variants
+                        </td>
+                        <td>
+                            <input class="input-box" type="number" step="1" name="max variants"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            min pH
+                        </td>
+                        <td>
+                            <input class="input-box" type="number" step="0.01" name="min pH"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            max pH
+                        </td>
+                        <td>
+                            <input class="input-box" type="number" step="0.01" name="max pH"/>
+                        </td>
+                    </tr>
+                </table>
+                <input type="submit" class="btn btn-block" value="Prepare Ligands" name="upload"/>
             </form>
         </div>
     </div>
