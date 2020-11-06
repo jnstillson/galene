@@ -46,15 +46,15 @@ if __name__ == '__main__':
     except:
         pkg6 = 'Fail'
 
-    print('Networkx : ' + str(pkg6))
+    print('ipywidgets : ' + str(pkg6))
 
     try:
-        import ipywidgets
+        import py3Dmol
         pkg7 = 'Pass'
     except:
         pkg7 = 'Fail'
 
-    print('Networkx : ' + str(pkg7))
+    print('py3Dmol : ' + str(pkg7))
 
     try:
         import numpy

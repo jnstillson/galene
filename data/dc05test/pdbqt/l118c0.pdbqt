@@ -1,0 +1,26 @@
+REMARK  Name = ./data/dc05test/pdb/l118c0.pdb
+REMARK  2 active torsions:
+REMARK  status: ('A' for Active; 'I' for Inactive)
+REMARK    1  A    between atoms: C1_2  and  C2_3
+REMARK    2  A    between atoms: C2_3  and  C3_4
+REMARK                            x       y       z     vdW  Elec       q    Type
+REMARK                         _______ _______ _______ _____ _____    ______ ____
+ROOT
+ATOM      1  C3  UNL     1      -0.066  -0.843   0.035  0.00  0.00    -0.004 A 
+ATOM      2  C4  UNL     1      -1.345  -1.374  -0.100  0.00  0.00    +0.094 A 
+ATOM      3  N2  UNL     1      -2.277  -0.443   0.206  0.00  0.00    -0.244 NA
+ATOM      4  C5  UNL     1      -1.598   0.672   0.526  0.00  0.00    +0.081 A 
+ATOM      5  C6  UNL     1      -2.127   1.907   0.900  0.00  0.00    +0.019 A 
+ATOM      6  C7  UNL     1      -1.226   2.951   1.179  0.00  0.00    +0.002 A 
+ATOM      7  C8  UNL     1       0.167   2.741   1.078  0.00  0.00    +0.000 A 
+ATOM      8  C9  UNL     1       0.673   1.485   0.697  0.00  0.00    +0.001 A 
+ATOM      9  C10 UNL     1      -0.245   0.468   0.429  0.00  0.00    +0.015 A 
+ENDROOT
+BRANCH   1  10
+ATOM     10  C2  UNL     1       1.229  -1.540  -0.266  0.00  0.00    -0.007 C 
+BRANCH  10  12
+ATOM     11  N1  UNL     1       0.922  -1.626  -2.731  0.00  0.00    +0.242 NA
+ATOM     12  C1  UNL     1       1.780  -1.148  -1.645  0.00  0.00    -0.199 C 
+ENDBRANCH  10  12
+ENDBRANCH   1  10
+TORSDOF 2

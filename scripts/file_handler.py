@@ -19,14 +19,20 @@ def lig_set_from_smi(smi):
     ligs = []
     names = []
 
+    i = 0
     for line in lines:
         tabs = line.split()
-
-        lig = Ligand(smiles=str(tabs[0]), name=str(tabs[1]))
-        lig.prep_default_conf()
-        ligs.append(lig)
-
-        names.append(str(tabs[1]))
+        if len(tabs) == 2:
+            lig = Ligand(smiles=str(tabs[0]), name=str(tabs[1]))
+            lig.prep_default_conf()
+            ligs.append(lig)
+            names.append(str(tabs[1]))
+        elif len(tabs) == 1:
+            lig = Ligand(smiles=str(tabs[0]), name=f'lig{i}')
+            lig.prep_default_conf()
+            ligs.append(lig)
+            names.append(f'lig{i}')
+        i += 1
 
     lig_set = pd.DataFrame({'name': names,
                             'ligand': ligs,

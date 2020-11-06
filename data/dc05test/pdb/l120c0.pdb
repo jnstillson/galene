@@ -1,0 +1,40 @@
+COMPND    untitled_line_121
+HETATM    1 CL1  UNL     1      -1.164  -0.760   2.891  1.00  0.00          CL  
+HETATM    2  C1  UNL     1       0.349   0.017   2.461  1.00  0.00           C  
+HETATM    3  C2  UNL     1       1.025   0.804   3.398  1.00  0.00           C  
+HETATM    4  C3  UNL     1       2.231   1.421   3.053  1.00  0.00           C  
+HETATM    5  C4  UNL     1       2.760   1.260   1.769  1.00  0.00           C  
+HETATM    6  C5  UNL     1       2.083   0.478   0.818  1.00  0.00           C  
+HETATM    7  C6  UNL     1       2.639   0.320  -0.579  1.00  0.00           C  
+HETATM    8  N1  UNL     1       2.631   1.582  -1.344  1.00  0.00           N1+
+HETATM    9  C7  UNL     1       1.282   2.148  -1.576  1.00  0.00           C  
+HETATM   10  C8  UNL     1       0.626   1.657  -2.882  1.00  0.00           C  
+HETATM   11  C9  UNL     1       0.122   0.248  -2.784  1.00  0.00           C  
+HETATM   12  C10 UNL     1       0.663  -0.872  -3.408  1.00  0.00           C  
+HETATM   13  N2  UNL     1      -0.019  -1.985  -3.053  1.00  0.00           N  
+HETATM   14  C11 UNL     1      -0.987  -1.577  -2.214  1.00  0.00           C  
+HETATM   15  C12 UNL     1      -1.931  -2.370  -1.564  1.00  0.00           C  
+HETATM   16  C13 UNL     1      -2.847  -1.732  -0.707  1.00  0.00           C  
+HETATM   17  C14 UNL     1      -2.801  -0.333  -0.523  1.00  0.00           C  
+HETATM   18  C15 UNL     1      -1.837   0.442  -1.192  1.00  0.00           C  
+HETATM   19  C16 UNL     1      -0.938  -0.218  -2.030  1.00  0.00           C  
+HETATM   20  C17 UNL     1       0.879  -0.151   1.177  1.00  0.00           C  
+CONECT    1    2
+CONECT    2    3    3   20
+CONECT    3    4
+CONECT    4    5    5
+CONECT    5    6
+CONECT    6    7   20   20
+CONECT    7    8
+CONECT    8    9
+CONECT    9   10
+CONECT   10   11
+CONECT   11   12   12   19
+CONECT   12   13
+CONECT   13   14
+CONECT   14   15   15   19
+CONECT   15   16
+CONECT   16   17   17
+CONECT   17   18
+CONECT   18   19   19
+END

@@ -11,8 +11,8 @@ global lig_set
 global rec_set
 global display_set
 
-display_set = {'lig_set': lig_set_from_smi('./data/cofactors.smi'),
-               'rec_set': rec_set_from_file('./data/rec2.txt'),
+display_set = {'lig_set': lig_set_from_smi('./data/lig/cofactors.smi'),
+               'rec_set': rec_set_from_file('./data/rec/rec2.txt'),
                'pca_plot': None,
                'frag_plot': None,
                'frag_set': None,
