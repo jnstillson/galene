@@ -80,6 +80,7 @@ def ligPage(name):
         i = list(lig_set['name']).index(name)
         lig = lig_set.loc[i, 'ligand']
         img = Draw.MolToImage(lig.mol)
+        scores = [single_min_score(lig, i)[0] for i in range(len(lig.vina_result_scores))]
         return render_template('lig.html',
                                name=name,
                                lig=lig,
@@ -87,6 +88,8 @@ def ligPage(name):
                                molBlock=lig.mol_block,
                                display_set=display_set,
                                recid=recid,
+                               scores=scores,
+                               rec_names=list(display_set['rec_set']['name']),
                                )
     else:
         return redirect(url_for('ligSetPage'))
@@ -232,7 +235,6 @@ def resultsPage():
     if request.method == 'POST':
         rec = request.form['rec']
         id = display_set['rec_set'][display_set['rec_set']['name'] == rec]['recid'].values[0]
-        print(id)
         best_scores = min_score(display_set['lig_set'], id=id)
         colors = calculate_colors(best_scores)
         display_set['result_plot'] = scatter_to_js_color(display_set['pca_raw'], colors)

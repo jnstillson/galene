@@ -134,6 +134,40 @@ Ligand
     <h1>Docking Results</h1>
     <div class="row">
         <div class="col">
+            <canvas id="recScores" width="800" height="400"></canvas>
+                <script>
+                    let scores = {{scores|safe}};
+                    var ctx = document.getElementById('recScores').getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type : 'bar',
+                        data : {
+                            labels : {{rec_names|safe}},
+                            datasets : [{
+                                label: 'Best Vina Score',
+                                data: scores,
+                                backgroundColor: 'rgb(121, 163, 191)',
+                                borderColor: 'rgb(175, 218, 247)',
+                                borderWidth: 2,
+                                fill: true
+                            }],
+                        },
+                        options : {
+                            responsive : false,
+                            scales : {
+                                yAxes : [{
+                                    beginAtZero : true,
+                                }]
+                            }
+                        }
+                    });
+                </script>
+        </div>
+        <div class="col">
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
             <form action="#" method="POST">
                 {% for rec in display_set['rec_set']['name'] %}
                 <input class="btn" type="submit" value="{{rec}}" name= "rec"/>

@@ -17,7 +17,7 @@ class Dock():
         self.conf_id = conf_id
 
         self.conf_tag = str('l' + str(lig_id) + 'c' + str(conf_id))
-        self.name = str(rec.name[:4] + self.conf_tag)
+        self.name = str(rec.name + self.conf_tag)
 
         # debug
         self.wall_time = 0.0

@@ -1,0 +1,10 @@
+4wxx_1	-80.34	49.89	6.85	19.00	16.00	23.00	./data/rec/4wxx.pdbqt	./data/rec/pdb/4wxx.pdb
+4wxx_2	-45.34	61.39	8.35	17.00	21.00	18.00	./data/rec/4wxx.pdbqt	./data/rec/pdb/4wxx.pdb
+4wxx_3	-82.34	51.89	6.85	17.00	20.00	13.00	./data/rec/4wxx.pdbqt	./data/rec/pdb/4wxx.pdb
+4wxx_4	-51.34	43.89	-13.15	15.00	16.00	17.00	./data/rec/4wxx.pdbqt	./data/rec/pdb/4wxx.pdb
+4wxx_5	-87.34	66.39	-2.65	17.00	21.00	24.00	./data/rec/4wxx.pdbqt	./data/rec/pdb/4wxx.pdb
+4wxx_6	-46.84	61.39	7.85	16.00	21.00	17.00	./data/rec/4wxx.pdbqt	./data/rec/pdb/4wxx.pdb
+4wxx_7	-78.84	53.39	15.35	18.00	23.00	26.00	./data/rec/4wxx.pdbqt	./data/rec/pdb/4wxx.pdb
+4wxx_8	-39.84	38.89	-4.15	20.00	18.00	19.00	./data/rec/4wxx.pdbqt	./data/rec/pdb/4wxx.pdb
+4wxx_9	-37.84	63.39	-21.15	18.00	19.00	15.00	./data/rec/4wxx.pdbqt	./data/rec/pdb/4wxx.pdb
+4wxx_10	-75.34	61.89	-10.15	21.00	16.00	17.00	./data/rec/4wxx.pdbqt	./data/rec/pdb/4wxx.pdb
