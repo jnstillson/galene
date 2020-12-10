@@ -1,1 +1,1 @@
-{"max_variants_per_compound": 3, "min_ph": -6.0, "max_ph": -8.0, "source": "data/lig/bc02_ac05.smi", "output_folder": "data/lig"}
+{"max_variants_per_compound": 3, "min_ph": 6.0, "max_ph": 8.0, "source": "data/lig/bc02_ac05.smi", "output_folder": "data/lig"}

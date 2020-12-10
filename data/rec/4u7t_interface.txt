@@ -1,0 +1,1 @@
+4u7t_7	39.29	69.63	-9.78	14.00	15.00	17.00	./data/rec/4u7t.pdbqt	./data/rec/pdb/4u7t.pdb

@@ -182,10 +182,12 @@ def dockPage():
         if request.form['dock'] == 'Update Parameters':
             ex = int(request.values.get('ex'))
             name = str(request.values.get('name'))
+            des = str(request.values.get('description'))
             # update commands go here
         if request.form['dock'] == 'Start Dock':
             ex = int(request.values.get('ex'))
             name = str(request.values.get('name'))
+            des = str(request.values.get('description'))
             if check_name(name):
                 try:
                     screen = ScreenLibrary(display_set['lig_set'],
@@ -198,8 +200,10 @@ def dockPage():
                     screen.screen_library(ex=ex)
                     screen.convert_results()
                     screen.extract_results()
+
                 except:
                     pass
+                screen.write_summary(description=des, ex=ex)
             else:
                 name = 'Bad Name'
             # dock commands go here

@@ -1,6 +1,6 @@
 from .dock import *
 from .receptor import *
-
+import time
 
 class ScreenLibrary():
 
@@ -18,6 +18,7 @@ class ScreenLibrary():
         self.rec_set = rec_set
         self.lig_set = lig_set
         self.conf_set = []
+        self.times = []
         for i in range(len(lig_set)):
             self.conf_set += ([(conf,
                                 lig_set.loc[i, 'ligand'].conformer_set.index(conf),  # index of the conformer
@@ -122,17 +123,21 @@ class ScreenLibrary():
         problematic_ligands = 0
 
         for dock in self.dock_set:
+            t0 = time.time()
 
-            dock.vina_dock(self.lib_path, ex)
+
             try:
 
-                pass
+                dock.vina_dock(self.lib_path, ex)
+                docking_time = time.time()-t0
+                self.times.append(docking_time)
 
             except:
 
                 problematic_ligands += 1
 
         print('\nNumber of docking errors: ' + str(problematic_ligands) + '\n')
+
 
     def convert_results(self):
 
@@ -183,5 +188,26 @@ class ScreenLibrary():
         print('\nNumber of empty results: ' + str(problematic_ligands) + '\n')
 
         #potentially change to be a single matrix per receptor
+
+    def write_summary(self, description = None, ex = 0, ):
+        summary = open(self.lib_path + 'screen_report.txt', 'w+')
+
+        summary.write('### Screening Job Info ###\n\n')
+
+        summary.write('Name:\t' + self.name + '\n')
+        summary.write('Exhaustiveness:\t' + str(ex) + '\n')
+        summary.write('Receptor Number:\t' + str(len(self.rec_set)) + '\n')
+        summary.write('Ligand Number:\t' + str(len(self.lig_set)) + '\n')
+        summary.write('Description:\t' + description + '\n')
+
+        summary.write('\n### Screening Results ###\n\n')
+        summary.write('Average Docking Time:\t' + str(sum(self.times)/len(self.times)) + '\n')
+
+        summary.write('\n### Raw Results / Debug ###\n\n')
+        summary.write(str(self.times))
+
+        summary.close()
+        print('done.')
+
 
     ##  ###  ## Clean Up ##  ###  ##

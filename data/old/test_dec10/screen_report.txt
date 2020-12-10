@@ -1,0 +1,12 @@
+### Screening Job Info ###
+
+Name:	test_dec10
+Exhaustiveness:	1
+Receptor Number:	2
+Ligand Number:	2
+Description:	attempting to see if the description and summary functions now work
+
+### Screening Results ###
+
+Average Docking Time:	8.498774111270905
+[16.497899055480957, 0.282379150390625, 16.96715211868286, 0.2476661205291748]
