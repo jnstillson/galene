@@ -123,39 +123,51 @@ def setupPage():
     ligSuc = 'No File'
     recSuc = 'No File'
     resSuc = 'No File'
+
+
     if request.method == 'POST':
         if request.form['upload'] == 'Upload':
-            ligFile = request.values.get('lig file')
-            display_set['lig_file'] = ligFile
-            recFile = request.values.get('rec file')
-            resFolder = request.values.get('result folder')
+            lig_file = request.values.get('lig file')
+            rec_file = request.values.get('rec file')
+            res_folder = request.values.get('result folder')
+
+            #TODO temp fix
+            lig_file = 'data/lig/' + lig_file
+            rec_file = 'data/rec/' + rec_file
+
+            display_set['lig_file'] = lig_file
             try:
-                display_set['rec_set'] = rec_set_from_file(recFile)
-                recSuc = recFile
+                display_set['rec_set'] = rec_set_from_file(rec_file)
+                recSuc = rec_file
             except:
                 recSuc = 'No New File'
-            if ligFile[-3:] == 'smi':
+
+            if lig_file[-3:] == 'smi':
                 try:
-                    display_set['lig_set'] = lig_set_from_smi(ligFile)
-                    ligSuc = ligFile
+                    display_set['lig_set'] = lig_set_from_smi(lig_file)
+                    ligSuc = lig_file
                 except:
                     ligSuc = 'No New File'
-            elif ligFile[-3:] == 'sdf':
+            elif lig_file[-3:] == 'sdf':
                 try:
-                    display_set['lig_set'] = lig_set_from_gypsum(ligFile)
-                    ligSuc = ligFile
+                    display_set['lig_set'] = lig_set_from_gypsum(lig_file)
+                    ligSuc = lig_file
                 except:
                     ligSuc = 'No New File'
             else:
                 ligSuc = 'No New File'
 
             try:
-                screen = ScreenLibrary(display_set['lig_set'], display_set['rec_set'], name=resFolder)
+                screen = ScreenLibrary(display_set['lig_set'], display_set['rec_set'], name=res_folder)
                 screen.create_dock_set()
                 screen.extract_results()
-                resSuc = resFolder
+                resSuc = res_folder
             except:
                 resSuc = 'No New Results'
+
+            display_set['lig_set_prop'] = get_lig_set_properties(display_set['lig_set'])
+            display_set['rec_set_prop'] = get_rec_set_properties(display_set['rec_set'])
+
         elif request.form['upload'] == 'Prepare Ligands':
             gypsum_params = {'max_variants_per_compound': int(request.values.get('max variants')),
                              'min_ph': float(request.values.get('min pH')),
@@ -169,7 +181,7 @@ def setupPage():
                 print('resetting lig set')
                 display_set['lig_set'] = lig_set_from_gypsum(display_set['lig_file'])
 
-    return render_template('setup.html', ligSuc=ligSuc, recSuc=recSuc, resSuc=resSuc)
+    return render_template('setup.html', ligSuc=ligSuc, recSuc=recSuc, resSuc=resSuc, display_set=display_set)
 
 
 @app.route('/dock', methods=['GET', 'POST'])
@@ -253,3 +265,11 @@ def settingsPage():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+#TODO add counter / update the 'progress' concept' (could involve threaading?)
+#TODO add a results 'form?' that can be sorted by top or searched for a specific result
+#TODO receptor imaging
+#TODO conformer organization / clustering
+#TODO conformer visualization
+#TODO Identify interactions in conformers?

@@ -17,7 +17,7 @@ Setup
                             Ligand File
                         </td>
                         <td>
-                            <input class="input-box" type="text" name="lig file"/>
+                            <input class="input-box" type="file" name="lig file"/>
                         </td>
                     </tr>
                     <tr>
@@ -25,7 +25,7 @@ Setup
                             Receptor File
                         </td>
                         <td>
-                            <input class="input-box" type="text" name="rec file"/>
+                            <input class="input-box" type="file" name="rec file"/>
                         </td>
                     </tr>
                     <tr>
@@ -33,7 +33,7 @@ Setup
                             Results Folder
                         </td>
                         <td>
-                            <input class="input-box" type="text" name="result folder">
+                            <input class="input-box" type="text" name="result folder"/>
                         </td>
                     </tr>
             </table>
@@ -72,6 +72,28 @@ Setup
                 </table>
                 <input type="submit" class="btn btn-block" value="Prepare Ligands" name="upload"/>
             </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h3> Current Uploads </h3>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th> ligand number </th>
+                        <td> {{ display_set['lig_set_prop']['size'] }} </td>
+                    </tr>
+                    <tr>
+                        <th> receptor number</th>
+                        <td> {{ display_set['rec_set_prop']['size'] }} </td>
+                    </tr>
+                    <tr>
+                        <th> results folder </th>
+                        <td> {{ resSuc }} </td>
+                    </tr>
+                </tbody>
+            </table>
+
         </div>
     </div>
 </div>
